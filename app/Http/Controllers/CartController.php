@@ -6,37 +6,29 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
-    public function index()
+    public function add(Request $request)
     {
-        $carts = Cart::with('product')->where('customer_id', Auth::id())->get();
-        return view('cart', compact('carts'));
-    }
-
-    public function addToCart(Request $request)
-    {
-        $validated = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
-        ]);
-
-        $user_id = Auth::id();
         $product = Product::find($request->product_id);
-        if (!$product) {
-            return response()->json(['error' => 'Produk tidak ditemukan'], 404);
+        
+        if(!$product) {
+            return response()->json(['error' => 'Product not found'], 404);
         }
 
-        $quantity = $request->quantity;
-        $price = $product->harga;
-        $total_price = $price * $quantity;
+        $cart = Session::get('cart', []);
+        $cart[$product->id] = [
+            'product_id' => $product->id,
+            'name' => $product->nama_product,
+            'price' => $product->harga,
+            'quantity' => $request->quantity,
+            'image' => $product->image_path
+        ];
 
-        $cart = Cart::updateOrCreate(
-            ['customer_id' => $user_id, 'product_id' => $request->product_id],
-            ['quantity' => $quantity, 'price' => $price, 'total_price' => $total_price]
-        );
+        Session::put('cart', $cart);
 
-        return response()->json(['success' => 'Produk berhasil ditambahkan ke keranjang!']);
+        return response()->json(['success' => 'Product added to cart']);
     }
 }

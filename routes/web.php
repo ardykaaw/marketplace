@@ -129,8 +129,7 @@ Route::post('admin/register', [AdminRegisterController::class, 'register'])->nam
 Route::post('/admin/orders/{order}/confirm', [AdminController::class, 'confirmOrder'])->name('admin.orders_confirm');
 
 // Added route for cart
-Route::get('/cart', [CartController::class, 'index'])->name('cart');
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'add'])->name('cart');
 
 // Added route for orders
 Route::get('/orders', [OrderController::class, 'index']);

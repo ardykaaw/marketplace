@@ -33,7 +33,7 @@
                             <button type="button" class="btn btn-secondary btn-sm" onclick="increaseQuantity()">+</button>
                         </div>
                         <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#paymentModal" data-product-id="{{ $product->id }}">Beli Sekarang</button>
-                        <button type="button" class="btn btn-success mt-3" onclick="addToCart({{ $product->id }})">Masukkan Keranjang</button>
+                       <a href="{{ route('cart', $product->id)}}"> <button type="button" class="btn btn-success mt-3" onclick="addToCart({{ $product->id }})">Masukkan Keranjang</button></a>
                     </div>
                 </div>
             </div>
