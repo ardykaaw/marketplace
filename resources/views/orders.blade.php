@@ -67,7 +67,7 @@
                             <!-- Panduan pembayaran akan ditampilkan di sini -->
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Konfirmasi Pembayaran</button>
-                    </form
+                    </form>
                 </div>
             </div>
         </div>
@@ -99,7 +99,7 @@
                 } else if (selectedMethod === 'BRI') {
                     guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BRI</h5><p>Transfer ke rekening BRI 9876543210 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
                 } else if (selectedMethod === 'BNI') {
-                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
+                    guide = '<div class="card"><div the="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
                 }
 
                 $('#payment-guide').html(guide);

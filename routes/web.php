@@ -153,3 +153,8 @@ Route::get('/clear-cart', function() {
     session()->forget('cart');
     return redirect()->back();
 });
+
+// Added route to debug session
+Route::get('/debug-session', function() {
+    return session()->get('cart');
+});
