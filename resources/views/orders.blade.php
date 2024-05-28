@@ -33,7 +33,7 @@
                             <button type="button" class="btn btn-secondary btn-sm" onclick="increaseQuantity()">+</button>
                         </div>
                         <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#paymentModal" data-product-id="{{ $product->id }}">Beli Sekarang</button>
-                       <a href="{{ route('cart', $product->id)}}"> <button type="button" class="btn btn-success mt-3" onclick="addToCart({{ $product->id }})">Masukkan Keranjang</button></a>
+                       <a href="{{ route('cart', $product->id)}}"> <button type="button" class="btn btn-success mt-3" onclick="add({{ $product->id }})">Masukkan Keranjang</button></a>
                     </div>
                 </div>
             </div>
@@ -122,20 +122,20 @@
             document.getElementById('orderQuantity').value = value;
         }
 
-        function addToCart(productId) {
+        function add(productId) {
             var quantity = document.getElementById('quantity').value;
 
             $.ajax({
-                url: '{{ route("cart.add") }}',
+                url: '{{ route("cart.add") }}', // Sesuaikan dengan route yang didefinisikan
                 method: 'POST',
                 data: {
-                    _token: '{{ csrf_token() }}', // Pastikan CSRF token ada
+                    _token: '{{ csrf_token() }}',
                     product_id: productId,
                     quantity: quantity
                 },
                 success: function(response) {
                     alert('Produk berhasil ditambahkan ke keranjang!');
-                    // Opsional: tambahkan logika untuk memperbarui tampilan keranjang atau jumlah item di navbar
+                    window.location.href = '{{ route("show.cart") }}'; // Sesuaikan dengan route yang menampilkan halaman keranjang
                 },
                 error: function(xhr, status, error) {
                     alert('Gagal menambahkan produk ke keranjang. Error: ' + xhr.responseText);

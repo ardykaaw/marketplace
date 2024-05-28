@@ -14,7 +14,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminRegisterController; 
 use App\Http\Controllers\AboutController;// Added this line to include the DashboardController
 use App\Http\Controllers\CartController; // Added this line to include the CartController
-use App\Http\Controllers\ReviewController; // Added this line to include the ReviewController
+use App\Http\Controllers\ReviewController; // Ads line to include the ReviewController
 
 // Route untuk halaman home
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
@@ -76,6 +76,7 @@ Route::get('/orders/success', function () {
     return view('orders.success');
 })->name('orders.success');
 
+
 // Route untuk dashboard admin dengan middleware auth untuk admin
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
@@ -128,10 +129,11 @@ Route::post('admin/register', [AdminRegisterController::class, 'register'])->nam
 // Added route for confirming orders
 Route::post('/admin/orders/{order}/confirm', [AdminController::class, 'confirmOrder'])->name('admin.orders_confirm');
 
-// Added route for cart
-Route::get('/cart', [CartController::class, 'add'])->name('cart');
 
-// Added route for orders
+// Route untuk menampilkan halaman keranjang
+Route::get('/cart', [CartController::class, 'displayCart'])->name('cart');
+
+// Added route for orwders
 Route::get('/orders', [OrderController::class, 'index']);
 
 // Definisikan rute untuk membuat review
@@ -143,3 +145,5 @@ Route::post('/review/store', [ReviewController::class, 'store'])->name('review.s
 // Added route for deleting orders
 Route::delete('/order/delete/{id}', 'OrderController@delete')->name('order.delete');
 
+// Added route for adding products to cart
+Route::post('/cart/add', [CartController::class, 'addProductToCart'])->name('cart.add');
