@@ -67,7 +67,7 @@
                             <!-- Panduan pembayaran akan ditampilkan di sini -->
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Konfirmasi Pembayaran</button>
-                    </form>
+                    </form
                 </div>
             </div>
         </div>
@@ -97,9 +97,9 @@
                 if (selectedMethod === 'BCA') {
                     guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BCA</h5><p>Transfer ke rekening BCA 1234567890 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
                 } else if (selectedMethod === 'BRI') {
-                    guide = '<div class="card"><div the="card-body"><h5 class="card-title">Panduan Pembayaran BRI</h5><p>Transfer ke rekening BRI 9876543210 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
+                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BRI</h5><p>Transfer ke rekening BRI 9876543210 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
                 } else if (selectedMethod === 'BNI') {
-                    guide = '<div class="card"><div the="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
+                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
                 }
 
                 $('#payment-guide').html(guide);
@@ -126,7 +126,7 @@
             var quantity = document.getElementById('quantity').value;
 
             $.ajax({
-                url: '{{ route("cart.add") }}', // Sesuaikan dengan route yang didefinisikan
+                url: '{{ route("cart.add") }}',
                 method: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -134,8 +134,12 @@
                     quantity: quantity
                 },
                 success: function(response) {
-                    alert('Produk berhasil ditambahkan ke keranjang!');
-                    window.location.href = '{{ route("show.cart") }}'; // Sesuaikan dengan route yang menampilkan halaman keranjang
+                    if(response.status === 'success') {
+                        alert('Produk berhasil ditambahkan ke keranjang!');
+                        window.location.href = '{{ route("cart") }}';
+                    } else {
+                        alert('Gagal menambahkan produk ke keranjang. Pesan: ' + response.message);
+                    }
                 },
                 error: function(xhr, status, error) {
                     alert('Gagal menambahkan produk ke keranjang. Error: ' + xhr.responseText);

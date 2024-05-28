@@ -306,7 +306,7 @@
                                 alt="SonicWave Elite">
                         </div>
                         <div class="card-body border">
-                            <h5 class="card-title" style="color: white; ">SonicWave Elite</h5>
+                            <h5 class="card-title" style="color: white;  ">SonicWave Elite</h5>
                         </div>
                     </div>
                 </div>

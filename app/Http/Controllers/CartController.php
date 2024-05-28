@@ -37,19 +37,22 @@ class CartController extends Controller
             return response()->json(['error' => 'Produk tidak ditemukan'], 404);
         }
 
-        $cart = Cart::updateOrCreate(
-            ['user_id' => Auth::id(), 'product_id' => $productId],
-            ['quantity' => DB::raw("quantity + $quantity")]
-        );
+        $cart = session()->get('cart', []);
+        $cart[$productId] = [
+            "quantity" => $quantity,
+            "price" => $product->price,
+            "total_price" => $product->price * $quantity
+        ];
+
+        session()->put('cart', $cart);
 
         return response()->json(['success' => 'Produk berhasil ditambahkan ke keranjang']);
     }
 
     public function displayCart()
     {
-        // Implementasi pengambilan data keranjang dari session atau database
-        $carts = Session::get('cart', []);
-        if (!$carts) {
+        $carts = session()->get('cart', []);
+        if (empty($carts)) {
             return view('cart')->with('message', 'Keranjang belanja Anda kosong.');
         }
         return view('cart', ['carts' => $carts]);

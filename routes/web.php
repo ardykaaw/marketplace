@@ -147,3 +147,9 @@ Route::delete('/order/delete/{id}', 'OrderController@delete')->name('order.delet
 
 // Added route for adding products to cart
 Route::post('/cart/add', [CartController::class, 'addProductToCart'])->name('cart.add');
+
+// Added route to clear cart
+Route::get('/clear-cart', function() {
+    session()->forget('cart');
+    return redirect()->back();
+});
