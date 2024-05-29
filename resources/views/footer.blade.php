@@ -22,6 +22,7 @@
             width: 100%;
             left: 0;
             right: 0;
+            overflow: hidden;
         }
         .footer img {
             position: absolute;
@@ -43,8 +44,7 @@
             -webkit-filter: blur(140px);
             opacity: 50%;
             z-index: 1;
-
-        }
+            }
 
         .circle5 {
             position: absolute;

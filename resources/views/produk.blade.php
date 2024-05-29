@@ -17,6 +17,13 @@
             color: #fff;
             font-family: 'Inter', sans-serif;
         }
+        :root {
+            --primary: #232946;
+            --secondary: #EEBBC3;
+            --thirty: #B8C1EC;
+            --bg-main: #121629;
+            --card: #FFFFFE;
+        }
         .card-hover:hover {
             transform: translateY(-10px);
             transition: transform 0.3s;
@@ -56,6 +63,7 @@
         }
         .content {
             display: none;
+            margin-bottom: 100px;
         }
         .filter-container {
             display: flex;
@@ -127,7 +135,7 @@
                     <div class="category-title pt-5">{{ strtoupper($category) }}</div>
                     @foreach($products->where('category', $category) as $product)
                         <div class="col-md-4 d-flex align-items-stretch pt-5 shadow-sm card-hover">
-                            <div class="card" style="width: 100%; background-color: #1a1a2e; padding: 20px; border-radius: 10px; border: 2px solid #ffffff;">
+                            <div class="card" style="width: 100%; background-color: #232946; padding: 20px; border-radius: 10px; border: 2px solid #ffffff;">
                                 <img src="{{ asset($product->image_path) }}" class="card-img-top" alt="{{ $product->nama_product }}">
                                 <div class="card-body">
                                     <h5 class="card-title" style="color: #fff">{{ $product->nama_product }}</h5>
@@ -140,9 +148,9 @@
                 @endforeach
             </div>
         </div>
-        <div class="pt-5">
-            @include('footer')
-        </div>
+    </div>
+    <div class="footer">
+        @include('footer')
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

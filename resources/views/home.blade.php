@@ -147,7 +147,6 @@
             display: flex;
             justify-content: center;
             height: 200px;
-
         }
 
         .product-card .image-special-collection img {
@@ -181,7 +180,6 @@
         }
 
         .footer {
-            /* background-color: #0f3460; */
             padding: 20px;
             text-align: center;
         }
@@ -200,13 +198,13 @@
 
         .special-collection {
             background-color: var(--bg-main);
-            /* padding: 50px 100px; */
             height: 70vh;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .special-collection h2 {
@@ -221,10 +219,24 @@
 
         .enjoy-music {
             background-color: var(--bg-main);
-            padding: 50px 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            height: 80vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .circleMusic {
+            position: absolute;
+            right: -10px;
+            width: 500px;
+            aspect-ratio: 1/1;
+            border-radius: 100%;
+            background: rgba(184, 193, 236, 0.63);
+            filter: blur(180px);
+            -webkit-filter: blur(180px);
+            z-index: 1;
         }
 
         .enjoy-music .content {
@@ -241,7 +253,8 @@
         }
 
         .enjoy-music .image {
-            max-width: 40%;
+            max-width: 30%;
+            z-index: 2;
         }
 
         .enjoy-music .image img {
@@ -252,6 +265,7 @@
         .circle2 {
             position: absolute;
             right: 10%;
+            top: -10%;
             width: 800px;
             aspect-ratio: 1/1;
             border-radius: 100%;
@@ -341,11 +355,11 @@
                 <div class="col d-flex justify-content-center">
                     <div class="card product-card" style="width: 18rem; position: relative;">
                         <span class="badge bg-success" style="position: absolute; top: 10px; right: 10px;">New</span>
-                        <div class="image-special-collection border">
+                        <div class="image-special-collection">
                             <img src="{{ asset('images/headphone/headphone-8.png') }}" class="card-img-top"
                                 alt="SonicWave Elite">
                         </div>
-                        <div class="card-body border">
+                        <div class="card-body">
                             <h5 class="card-title">SonicWave Elite
                             </h5>
                         </div>
@@ -354,12 +368,12 @@
                 <div class="col d-flex justify-content-center">
                     <div class="card product-card" style="width: 18rem; position: relative;">
                         <span class="badge bg-success" style="position: absolute; top: 10px; right: 10px;">New</span>
-                        <div class="image-special-collection border">
+                        <div class="image-special-collection">
                             <img src="{{ asset('images/earphones/earphone-4.png') }}" class="card-img-top"
                                 alt="SonicPro X1">
                         </div>
 
-                        <div class="card-body border">
+                        <div class="card-body">
                             <h5 class="card-title">
                                 SonicPro X1</h5>
                         </div>
@@ -368,11 +382,11 @@
                 <div class="col d-flex justify-content-center">
                     <div class="card product-card" style="width: 18rem; position: relative;">
                         <span class="badge bg-success" style="position: absolute; top: 10px; right: 10px;">New</span>
-                        <div class="image-special-collection border">
+                        <div class="image-special-collection">
                             <img src="{{ asset('images/speaker/speaker-3.png') }}" class="card-img-top"
                                 alt="AcousticFlow Pro">
                         </div>
-                        <div class="card-body border">
+                        <div class="card-body">
                             <h5 class="card-title">AcousticFlow Pro</h5>
                         </div>
                     </div>
@@ -386,6 +400,7 @@
                     headphone, earphone, dan speaker yang akan meningkatkan pengalaman mendengarkan musik Anda setiap
                     hari.</p>
             </div>
+            <div class="circleMusic"></div>
             <div class="image py-5">
                 <img src="{{ asset('images/iklan.png') }}" alt="Person Listening to Music">
             </div>
