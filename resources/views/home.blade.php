@@ -365,7 +365,7 @@
         </div>
 
 
-        <footer class="footer pt-5">
+        <footer class="footer pt-5" style="z-index: -1">
             @include('footer')
         </footer>
     </div>
