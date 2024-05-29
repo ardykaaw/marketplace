@@ -85,21 +85,33 @@
             height: 60px;
         }
 
-        .banner-image img {
-            max-width: 80%;
-            height: auto;
-            animation: sideFade 1.5s ease-in-out;
-            margin-top: -100px;
+        .image-home {
+            display: grid;
+            justify-content: center;
+            height: 100vh;
         }
 
-        .banner-image .reflectionImg {
-            position: absolute;
-            max-width: 53%;
-            height: auto;
-            right: 245px;
+        .banner-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .banner-image img {
+            max-width: 80%;
+            /* animation: sideFade 1.5s ease-in-out; */
+            margin-top: 100px;
+        }
+
+        .reflectionImg {
+            display: flex;
+            justify-content: center;
             transform: rotate(180deg);
             z-index: -2;
             /* animation: sideFade 1.5s ease-in-out; */
+        }
+
+        .reflectionImg img {
+            max-width: 80%;
         }
 
         @keyframes sideFade {
@@ -126,13 +138,33 @@
         .product-card {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
-            padding: 0 50px;
+            /* padding: 70px 50px; */
+            aspec-ratio: 1/1;
+            width: 300px;
         }
+
         .product-card .image-special-collection {
-            padding: 20px;
+            display: flex;
+            justify-content: center;
+            height: 200px;
+
         }
+
+        .product-card .image-special-collection img {
+            /* width: 100px; */
+            max-width: 50%;
+            height: 100%;
+        }
+
         .product-card .card-body {
             padding: 0;
+        }
+
+        .card-title {
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .product-card .card-body .card-title {
@@ -168,8 +200,13 @@
 
         .special-collection {
             background-color: var(--bg-main);
-            padding: 50px 100px;
+            /* padding: 50px 100px; */
+            height: 70vh;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
         .special-collection h2 {
@@ -286,47 +323,57 @@
                     </div>
                 </div><a href="{{ route('produk') }}" class="btn btn-primary">Buy Now</a>
             </div>
-            <div class="banner-image">
-                <img src="{{ asset('images/headphone/headphone-9.png') }}" alt="Large Headphone">
+            <div class="image-home">
+                <div class="banner-image">
+                    <img src="{{ asset('images/headphone/headphone-9.png') }}" alt="Large Headphone">
+                </div>
                 <div class="reflectionImg">
                     <img src="{{ asset('images/headphone/headphone-9.png') }}" alt="Large Headphone">
                 </div>
             </div>
+
         </div>
 
         <div class="special-collection">
-            <h2 style="font-family: 'inter', sans-serif;">Special Collection</h2>
-            <p>Our Top Products in This Session</p>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <h3 style="font-family: 'inter', sans-serif;">Special Collection</h3>
+            <h3>Our Top Products in This Session</h3>
+            <div class="row row-cols-1 row-cols-md-3 g-5">
                 <div class="col d-flex justify-content-center">
                     <div class="card product-card" style="width: 18rem; position: relative;">
                         <span class="badge bg-success" style="position: absolute; top: 10px; right: 10px;">New</span>
-                        <div class="image-special-collection">
+                        <div class="image-special-collection border">
                             <img src="{{ asset('images/headphone/headphone-8.png') }}" class="card-img-top"
                                 alt="SonicWave Elite">
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title" style="color: white; position:absolute; right: 70px;">SonicWave Elite</h5>
+                        <div class="card-body border">
+                            <h5 class="card-title">SonicWave Elite
+                            </h5>
                         </div>
                     </div>
                 </div>
                 <div class="col d-flex justify-content-center">
                     <div class="card product-card" style="width: 18rem; position: relative;">
                         <span class="badge bg-success" style="position: absolute; top: 10px; right: 10px;">New</span>
-                        <img src="{{ asset('images/earphones/earphone-4.png') }}" class="card-img-top"
-                            alt="SonicPro X1">
-                        <div class="card-body">
-                            <h5 class="card-title" style="color: white; position: absolute; bottom: -1px; left: 90px;">SonicPro X1</h5>
+                        <div class="image-special-collection border">
+                            <img src="{{ asset('images/earphones/earphone-4.png') }}" class="card-img-top"
+                                alt="SonicPro X1">
+                        </div>
+
+                        <div class="card-body border">
+                            <h5 class="card-title">
+                                SonicPro X1</h5>
                         </div>
                     </div>
                 </div>
                 <div class="col d-flex justify-content-center">
                     <div class="card product-card" style="width: 18rem; position: relative;">
                         <span class="badge bg-success" style="position: absolute; top: 10px; right: 10px;">New</span>
-                        <img src="{{ asset('images/speaker/speaker-3.png') }}" class="card-img-top"
-                            alt="AcousticFlow Pro">
-                        <div class="card-body">
-                            <h5 class="card-title" style="color: white">AcousticFlow Pro</h5>
+                        <div class="image-special-collection border">
+                            <img src="{{ asset('images/speaker/speaker-3.png') }}" class="card-img-top"
+                                alt="AcousticFlow Pro">
+                        </div>
+                        <div class="card-body border">
+                            <h5 class="card-title">AcousticFlow Pro</h5>
                         </div>
                     </div>
                 </div>
@@ -354,7 +401,8 @@
                         style="width: 80px; height: 80px; background-image: url('{{ asset('images/iklan.jpg') }}'); background-size: cover; border-radius: 50%; margin-right: 20px;">
                     </div>
                     <div class="testimonial-content" style="text-align: left;">
-                        <p class="testimonial-text" style="font-size: 1rem; margin-bottom: 10px;">Produknya berkualitas
+                        <p class="testimonial-text" style="font-size: 1rem; margin-bottom: 10px;">Produknya
+                            berkualitas
                             sesuai dengan spesifikasi yang tertera di product</p>
                         <div class="testimonial-stars" style="color: #ffd700;">
                             &#9733; &#9733; &#9733; &#9733; &#9733;
