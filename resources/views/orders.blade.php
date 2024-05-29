@@ -99,7 +99,7 @@
                 } else if (selectedMethod === 'BRI') {
                     guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BRI</h5><p>Transfer ke rekening BRI 9876543210 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
                 } else if (selectedMethod === 'BNI') {
-                    guide = '<div class="card"><div the="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
+                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
                 }
 
                 $('#payment-guide').html(guide);
@@ -129,23 +129,4 @@
                 url: '{{ route("cart.add") }}',
                 method: 'POST',
                 data: {
-                    _token: '{{ csrf_token() }}',
-                    product_id: productId,
-                    quantity: quantity
-                },
-                success: function(response) {
-                    if(response.status === 'success') {
-                        alert('Produk berhasil ditambahkan ke keranjang!');
-                        window.location.href = '{{ route("cart") }}';
-                    } else {
-                        alert('Gagal menambahkan produk ke keranjang. Pesan: ' + response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert('Gagal menambahkan produk ke keranjang. Error: ' + xhr.responseText);
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+                    _token: '{{ csrf_token() }}', // CSRF token sudah ditambahka

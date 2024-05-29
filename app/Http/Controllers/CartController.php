@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +22,11 @@ class CartController extends Controller
             return response()->json(['message' => 'Produk tidak ditemukan'], 404);
         }
 
-        // Implementasi penambahan produk ke keranjang
+        $cart = Cart::updateOrCreate(
+            ['user_id' => Auth::id(), 'product_id' => $productId],
+            ['quantity' => 1, 'price' => $product->harga, 'total_price' => $product->harga]
+        );
+
         return response()->json(['message' => 'Produk telah berhasil ditambahkan ke keranjang']);
     }
 
@@ -39,10 +42,37 @@ class CartController extends Controller
 
         $cart = Cart::updateOrCreate(
             ['user_id' => Auth::id(), 'product_id' => $productId],
-            ['quantity' => DB::raw("quantity + $quantity"), 'price' => $product->harga, 'total_price' => $product->harga * $quantity]
+            ['quantity' => DB::raw("quantity + $quantity"), 'price' => $product->harga, 'total_price' => DB::raw("total_price + " . ($product->harga * $quantity))]
         );
 
         return response()->json(['success' => 'Produk berhasil ditambahkan ke keranjang']);
+    }
+
+    public function add(Request $request)
+    {
+        $product_id = $request->product_id;
+        $quantity = $request->quantity;
+        $user_id = auth()->id(); // Asumsi user sudah login
+
+        // Cari produk untuk mendapatkan harga
+        $product = Product::find($product_id);
+        if (!$product) {
+            return response()->json(['status' => 'error', 'message' => 'Produk tidak ditemukan']);
+        }
+
+        // Hitung total harga
+        $total_price = $product->harga * $quantity;
+
+        // Buat record baru di tabel carts
+        Cart::create([
+            'customer_id' => $user_id,
+            'product_id' => $product_id,
+            'quantity' => $quantity,
+            'price' => $product->harga,
+            'total_price' => $total_price
+        ]);
+
+        return response()->json(['status' => 'success']);
     }
 
     public function displayCart()
@@ -56,3 +86,4 @@ class CartController extends Controller
         return view('cart', ['carts' => $carts]);
     }
 }
+

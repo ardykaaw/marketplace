@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,10 @@
     </div>
     <div class="container mt-5 pt-5">
         <h1>Keranjang Belanja</h1>
-        @if(isset($carts) && count($carts) > 0)
+        @php
+            $carts = session('carts', collect());
+        @endphp
+        @if($carts->isNotEmpty())
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -42,4 +45,3 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-

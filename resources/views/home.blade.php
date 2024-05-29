@@ -305,8 +305,8 @@
                             <img src="{{ asset('images/headphone/headphone-8.png') }}" class="card-img-top"
                                 alt="SonicWave Elite">
                         </div>
-                        <div class="card-body border">
-                            <h5 class="card-title" style="color: white;  ">SonicWave Elite</h5>
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: white; position:absolute; right: 70px;">SonicWave Elite</h5>
                         </div>
                     </div>
                 </div>
@@ -315,8 +315,8 @@
                         <span class="badge bg-success" style="position: absolute; top: 10px; right: 10px;">New</span>
                         <img src="{{ asset('images/earphones/earphone-4.png') }}" class="card-img-top"
                             alt="SonicPro X1">
-                        <div class="card-body border">
-                            <h5 class="card-title" style="color: white">SonicPro X1</h5>
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: white; position: absolute; bottom: -1px; left: 90px;">SonicPro X1</h5>
                         </div>
                     </div>
                 </div>
