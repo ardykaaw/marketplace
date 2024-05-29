@@ -98,11 +98,28 @@
                             <div class="d-flex align-items-center">
                                 <button type="button" class="btn btn-secondary btn-sm"
                                     onclick="decreaseQuantity()">-</button>
-                                <input type="text" id="quantity" value="1" class="form-control mx-2"
-                                    style="width: 50px;" readonly>
+                                <input type="number" id="quantity" value="1" class="form-control mx-2"
+                                    style="width: 50px;" min="1">
                                 <button type="button" class="btn btn-secondary btn-sm"
                                     onclick="increaseQuantity()">+</button>
                             </div>
+                            <script>
+                                function decreaseQuantity() {
+                                    var quantityInput = document.getElementById('quantity');
+                                    var currentValue = parseInt(quantityInput.value);
+                                    if (currentValue > 1) {
+                                        quantityInput.value = currentValue - 1;
+                                    }
+                                    document.getElementById('orderQuantity').value = quantityInput.value;
+                                }
+
+                                function increaseQuantity() {
+                                    var quantityInput = document.getElementById('quantity');
+                                    var currentValue = parseInt(quantityInput.value);
+                                    quantityInput.value = currentValue + 1;
+                                    document.getElementById('orderQuantity').value = quantityInput.value;
+                                }
+                            </script>
                             <div class="buttonExpression">
                                 <div class="buttonBuyNow">
                                     <button type="button" class="btn mt-3" data-toggle="modal"
@@ -159,7 +176,7 @@
         </div>
     </div>
     <!-- Tambahkan JS Bootstrap dan jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
@@ -180,17 +197,11 @@
                 var guide = '';
 
                 if (selectedMethod === 'BCA') {
-                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BCA</h5><p>Transfer ke rekening BCA 1234567890 a/n AUDIO.</p><p>Total yang harus dibayar: Rp '
-                        +
-                        totalHarga + '</p></div></div>';
+                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BCA</h5><p>Transfer ke rekening BCA 1234567890 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
                 } else if (selectedMethod === 'BRI') {
-                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BRI</h5><p>Transfer ke rekening BRI 9876543210 a/n AUDIO.</p><p>Total yang harus dibayar: Rp '
-                        +
-                        totalHarga + '</p></div></div>';
+                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BRI</h5><p>Transfer ke rekening BRI 9876543210 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
                 } else if (selectedMethod === 'BNI') {
-                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp '
-                        +
-                        totalHarga + '</p></div></div>';
+                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
                 }
 
                 $('#payment-guide').html(guide);
@@ -217,7 +228,19 @@
             var quantity = document.getElementById('quantity').value;
 
             $.ajax({
-                        url: '{{ route('cart.add') }}',
-                        method: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}', // CSRF token sudah ditambahka
+                url: '{{ route('cart.add') }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_id: productId,
+                    quantity: quantity
+                },
+                success: function(response) {
+                    alert('Produk berhasil ditambahkan ke keranjang');
+                },
+                error: function(error) {
+                    alert('Terjadi kesalahan, silakan coba lagi');
+                }
+            });
+        }
+    </script>
