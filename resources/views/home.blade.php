@@ -136,7 +136,9 @@
                 </div>
             </div>
         </div>
-
+        <div id="contact">
+            @include('kontak')
+        </div>
 
         <footer class="footer pt-5" style="z-index: -1">
             @include('footer')

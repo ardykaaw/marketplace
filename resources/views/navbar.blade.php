@@ -88,7 +88,7 @@
                         <a class="nav-link" href="{{ route('produk') }}">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('kontak') }}">Contact Us</a>
+                        <a class="nav-link" href="#contact">Contact Us</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">

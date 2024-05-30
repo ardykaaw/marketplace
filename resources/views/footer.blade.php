@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,14 @@
     <title>Bagian Footer</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <style>
-         :root {
+        :root {
             --primary: #232946;
             --secondary: #EEBBC3;
             --thirty: #B8C1EC;
             --bg-main: #121629;
             --card: #FFFFFE;
-         }
+        }
+
         .footer {
             background-color: var(--bg-main);
             color: white;
@@ -24,6 +26,7 @@
             right: 0;
             overflow: hidden;
         }
+
         .footer img {
             position: absolute;
             bottom: 0;
@@ -32,6 +35,7 @@
             height: auto;
             z-index: 1;
         }
+
         .circle4 {
             position: absolute;
             top: -50px;
@@ -44,7 +48,7 @@
             -webkit-filter: blur(140px);
             opacity: 50%;
             z-index: 1;
-            }
+        }
 
         .circle5 {
             position: absolute;
@@ -66,11 +70,12 @@
         }
     </style>
 </head>
+
 <body>
     <div class="circle4"></div>
     <div class="circle5"></div>
     <footer class="footer text-center">
-        <img src="{{asset('images\tanggaNada1 1 (1).png')}}" alt="Music Notes">
+        <img src="{{ asset('images\tanggaNada1 1 (1).png') }}" alt="Music Notes">
         <div class="container footer-content">
             <div class="row">
                 <div class="col-md-4 mb-4">
@@ -107,5 +112,7 @@
         </div>
     </footer>
 </body>
+
 </html>
+
 </html>
