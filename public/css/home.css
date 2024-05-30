@@ -29,10 +29,6 @@ background: var(--secondary);
   z-index: -2;
 }
 
-.banner-content {
-  /* max-width: 50%; */
-}
-
 .banner-content h1 {
   font-size: 3rem;
   margin-bottom: 20px;

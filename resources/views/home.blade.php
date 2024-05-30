@@ -112,6 +112,7 @@
         <div class="paralax">
             <div class="contentParalax">
                 <h1>Audio</h1>
+                <h1>d</h1>
             </div>
         </div>
         {{-- paralax END --}}
