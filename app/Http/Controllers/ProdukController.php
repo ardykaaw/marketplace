@@ -9,17 +9,15 @@ class ProdukController extends Controller
 {
     public function index(Request $request)
     {
-        $type = $request->input('type', 'all'); // Default adalah 'all'
-        if ($type == 'all') {
-            $products = Product::all();
-        } else {
-            // Menggunakan query builder untuk mencari produk berdasarkan kata kunci di image_path
-            $products = Product::where('image_path', 'like', '%' . $type . '%')->get();
+        $query = Product::query();
+
+        if ($request->has('search')) {
+            $query->where('nama_product', 'like', '%' . $request->search . '%');
         }
 
-        // Mengembalikan view dashboard yang berisi daftar produk
+        $products = $query->get();
+
         return view('produk', compact('products'));
-        // Pastikan Anda memiliki file view di resources/views/admin/dashboard.blade.php
     }
 
     public function store(Request $request)
