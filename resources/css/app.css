@@ -1,0 +1,16 @@
+:root {
+    --primary: #232946;
+    --secondary: #eebbc3;
+    --thirty: #b8c1ec;
+    --bg-main: #121629;
+    --card: #fffffe;
+}
+body {
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    overflow-x: hidden;
+}
+
+::selection {
+  background: var(--secondary);
+}
