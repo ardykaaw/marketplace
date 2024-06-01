@@ -130,18 +130,19 @@
                 <div class="col-md-6 flex items-center ">
                     <form action="{{ url('/submit-kontak') }}" method="post">
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="nama" name="nama"
-                                placeholder="Username">
+                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama">
                         </div>
                         <div class="mb-3">
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Password">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                         </div>
                         <div class="mb-3">
-                            <textarea class="form-control" id="pesan" name="pesan" rows="3" placeholder="Message"></textarea>
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subjek">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" id="pesan" name="pesan" rows="3" placeholder="Pesan"></textarea>
                         </div>
                         <div class="buttonContactUs">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Kirim</button>
                         </div>
                     </form>
                 </div>
