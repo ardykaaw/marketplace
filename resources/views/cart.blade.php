@@ -27,8 +27,11 @@
                 </thead>
                 <tbody>
                     @foreach($carts as $cart)
+                        @php
+                            $product = \App\Models\Product::find($cart->product_id);
+                        @endphp
                         <tr>
-                            <td>{{ $cart->product->nama_product }}</td>
+                            <td>{{ $product->nama_product }}</td>
                             <td>{{ $cart->quantity }}</td>
                             <td>Rp {{ number_format($cart->price, 0, ',', '.') }}</td>
                             <td>Rp {{ number_format($cart->total_price, 0, ',', '.') }}</td>

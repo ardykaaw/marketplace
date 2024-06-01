@@ -32,8 +32,8 @@ class CartController extends Controller
 
     public function addProductToCart(Request $request)
     {
-        $productId = $request->product_id;
-        $quantity = $request->quantity;
+        $productId = $request->input('product_id');
+        $quantity = $request->input('quantity', 1); // Default quantity to 1 if not provided
         $product = Product::find($productId);
 
         if (!$product) {
@@ -50,8 +50,8 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
-        $product_id = $request->product_id;
-        $quantity = $request->quantity;
+        $product_id = $request->input('product_id');
+        $quantity = $request->input('quantity', 1); // Default quantity to 1 if not provided
         $user_id = auth()->id(); // Asumsi user sudah login
 
         // Cari produk untuk mendapatkan harga
@@ -86,4 +86,3 @@ class CartController extends Controller
         return view('cart', ['carts' => $carts]);
     }
 }
-
