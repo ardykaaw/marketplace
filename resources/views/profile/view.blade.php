@@ -17,11 +17,29 @@
             max-height: 300px;
             overflow-y: auto;
         }
+        .loader {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 80px;
+            height: 80px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
     <!-- Di dalam <head> -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background-color: #1a1a2e;">
+<div class="loader" id="loader"></div> <!-- Loader animasi -->
 <div> 
     @include('navbar')
 </div>
@@ -131,12 +149,19 @@
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    var loader = document.getElementById("loader");
+    loader.style.display = "none";
+});
+
 function setOrderId(orderId) {
     document.getElementById('order_id').value = orderId;
 }
 
 function deleteOrder(orderId) {
     if (confirm('Apakah Anda yakin ingin menghapus pesanan ini?')) {
+        var loader = document.getElementById("loader");
+        loader.style.display = "block";
         $.ajax({
             url: '{{ url("order/delete") }}/' + orderId,
             type: 'POST',
@@ -150,6 +175,7 @@ function deleteOrder(orderId) {
             },
             error: function(xhr, status, error) {
                 alert('Gagal menghapus pesanan: ' + error);
+                loader.style.display = "none";
             }
         });
     }
@@ -162,3 +188,4 @@ function deleteOrder(orderId) {
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+

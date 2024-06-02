@@ -12,10 +12,7 @@
     </div>
     <div class="container mt-5 pt-5">
         <h1>Keranjang Belanja</h1>
-        @php
-            $carts = session('carts', collect());
-        @endphp
-        @if($carts->isNotEmpty())
+        @if(session('cart'))
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -26,15 +23,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($carts as $cart)
-                        @php
-                            $product = \App\Models\Product::find($cart->product_id);
-                        @endphp
+                    @foreach(session('cart') as $id => $details)
                         <tr>
-                            <td>{{ $product->nama_product }}</td>
-                            <td>{{ $cart->quantity }}</td>
-                            <td>Rp {{ number_format($cart->price, 0, ',', '.') }}</td>
-                            <td>Rp {{ number_format($cart->total_price, 0, ',', '.') }}</td>
+                            <td>{{ $details['nama_product'] }}</td>
+                            <td>{{ $details['quantity'] }}</td>
+                            <td>Rp {{ number_format($details['price'], 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($details['total_price'], 0, ',', '.') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
