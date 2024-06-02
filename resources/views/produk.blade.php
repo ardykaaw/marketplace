@@ -272,9 +272,9 @@
                 @endforeach
             </div>
         </div>
-    </div>
-    <div class="footer">
-        @include('footer')
+        <div class="footer">
+            @include('footer')
+        </div>
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
