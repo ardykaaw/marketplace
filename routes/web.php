@@ -152,3 +152,9 @@ Route::get('/carts', [CartController::class, 'showCart'])->name('cart.show');
 Route::get('/cart/show/{userId}', [CartController::class, 'showCart'])->name('cart.show');
 // routes/web.php
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
+// Rute untuk memperbarui kuantitas produk di keranjang
+Route::post('/cart/update', [App\Http\Controllers\CartController::class, 'updateCart']);
+
+// Rute untuk menghapus produk dari keranjang
+Route::post('/cart/remove', [App\Http\Controllers\CartController::class, 'removeProductFromCart']);

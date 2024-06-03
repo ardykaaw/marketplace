@@ -38,6 +38,34 @@ class CartController extends Controller
         return response()->json(['success' => 'Produk berhasil ditambahkan ke keranjang']);
     }
 
+    public function updateCart(Request $request)
+    {
+        $userId = Auth::id();
+        $productId = $request->input('product_id');
+        $quantity = $request->input('quantity');
+
+        $cart = Cart::where('user_id', $userId)->first();
+        $cartProduct = $cart->products()->where('product_id', $productId)->first();
+
+        if ($cartProduct) {
+            $cartProduct->pivot->quantity = $quantity;
+            $cartProduct->pivot->save();
+        }
+
+        return response()->json(['success' => 'Kuantitas produk diperbarui']);
+    }
+
+    public function removeProductFromCart(Request $request)
+    {
+        $userId = Auth::id();
+        $productId = $request->input('product_id');
+
+        $cart = Cart::where('user_id', $userId)->first();
+        $cart->products()->detach($productId);
+
+        return response()->json(['success' => 'Produk dihapus dari keranjang']);
+    }
+
     public function showCart()
     {
         $userId = Auth::id();
