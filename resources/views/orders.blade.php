@@ -103,13 +103,12 @@
                                 Spesifikasi:
                                 <br>
                                 @php
-                                    $specification = explode("\n", $product->spesifikasi); 
+                                    $specification = explode("\n", $product->spesifikasi);
                                 @endphp
 
                                 @foreach ($specification as $spec)
                                     {{ $spec }}<br>
                                 @endforeach
-                                {{-- {{ $product->spesifikasi }} --}}
                             </p>
                             <p class="card-text lead">Harga: {{ $product->harga }}</p>
                             <div class="d-flex align-items-center">
@@ -152,8 +151,6 @@
                                     </form>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,49 @@
+.sidebarLeft {
+    color: white;
+}
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Menambahkan shadow awal */
+}
+
+.scrollable-table {
+    /* max-height: 300px; */
+    /* overflow-y: auto; */
+}
+
+.loader {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 80px;
+    height: 80px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.section {
+  padding: 0 40px;
+}
+.emailSidebarleft {
+  font-weight:lighter;
+  font-size: 13px;
+  color: #d0cccc;
+}
+body {
+  overflow: hidden;
+}
