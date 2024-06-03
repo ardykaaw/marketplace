@@ -66,7 +66,7 @@
     <div>
         @include('navbar')
     </div>
-    <div class="container cart-container">
+    <div class="container cart-container ">
         <div class="cart-items">
             <h1>Keranjang Belanja</h1>
             @if($cart && $cart->products->count() > 0)
