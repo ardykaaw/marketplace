@@ -93,7 +93,7 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('cart') }}"><i class="bi bi-cart"></i></a>
+                        <a class="nav-link" href="#"><i class="bi bi-cart"></i></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button"

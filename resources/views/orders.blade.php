@@ -127,11 +127,12 @@
                                         Sekarang</button>
                                 </div>
                                 <div class="buttonAddCart">
-                                    <a href="{{ route('cart', $product->id) }}">
-                                        <button type="button" class="btn mt-3"
-                                            onclick="add({{ $product->id }})">Masukkan
-                                            Keranjang</button>
-                                    </a>
+                                    <form action="{{ route('cart.add') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="quantity" id="cartQuantity" value="1">
+                                        <button type="submit" class="btn mt-3">Masukkan Keranjang</button>
+                                    </form>
                                 </div>
                             </div>
 
@@ -152,7 +153,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body">\
                         <form action="{{ route('orders.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -214,6 +215,7 @@
             value++;
             document.getElementById('quantity').value = value;
             document.getElementById('orderQuantity').value = value;
+            document.getElementById('cartQuantity').value = value;
         }
 
         function decreaseQuantity() {
@@ -222,25 +224,55 @@
             value < 2 ? value = 1 : value--;
             document.getElementById('quantity').value = value;
             document.getElementById('orderQuantity').value = value;
+            document.getElementById('cartQuantity').value = value;
         }
 
-        function add(productId) {
-            var quantity = document.getElementById('quantity').value;
-
+        function addToCart(productId) {
             $.ajax({
-                url: '{{ route('cart.add') }}',
-                method: 'POST',
+                url: '/cart/add',
+                type: 'POST',
                 data: {
-                    _token: '{{ csrf_token() }}',
                     product_id: productId,
-                    quantity: quantity
+                    quantity: 1 // atau nilai lain berdasarkan input pengguna
                 },
                 success: function(response) {
-                    alert('Produk berhasil ditambahkan ke keranjang');
+                    alert(response.success);
                 },
-                error: function(error) {
-                    alert('Terjadi kesalahan, silakan coba lagi');
+                error: function() {
+                    alert('Error adding product to cart');
                 }
             });
         }
+    </script>
+
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="mr-auto">Keranjang</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            Produk berhasil ditambahkan ke keranjang.
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = form.serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: form.attr('action'),
+                    data: formData,
+                    success: function(response) {
+                        alert('Produk berhasil ditambahkan ke keranjang');
+                        var cartCount = parseInt($('#cart-count').text()) || 0;
+                        $('#cart-count').text(cartCount + 1);
+                    }
+                });
+            });
+        });
     </script>

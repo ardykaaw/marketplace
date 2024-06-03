@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'user_id'
+    ];
 
-    protected $fillable = ['customer_id', 'product_id', 'quantity', 'price', 'total_price'];
-
-    public function product()
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class, 'cart_product')
+                    ->withPivot('quantity', 'price', 'total_price')
+                    ->withTimestamps();
     }
-
-
 }
-

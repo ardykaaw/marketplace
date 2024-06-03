@@ -131,7 +131,7 @@ Route::post('/admin/orders/{order}/confirm', [AdminController::class, 'confirmOr
 
 
 // Route untuk menampilkan halaman keranjang
-Route::get('/cart', [CartController::class, 'displayCart'])->name('cart');
+Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
 
 // Added route for orwders
 Route::get('/orders', [OrderController::class, 'index']);
@@ -145,16 +145,10 @@ Route::post('/review/store', [ReviewController::class, 'store'])->name('review.s
 // Added route for deleting orders
 Route::delete('/order/delete/{id}', 'OrderController@delete')->name('order.delete');
 
-// Added route for adding products to cart
-Route::post('/cart/add', [CartController::class, 'addProductToCart'])->name('cart.add');
 
-// Added route to clear cart
-Route::get('/clear-cart', function() {
-    session()->forget('cart');
-    return redirect()->back();
-});
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/carts', [CartController::class, 'showCart'])->name('cart.show');
 
-// Added route to debug session
-Route::get('/debug-session', function() {
-    return session()->get('cart');
-});
+Route::get('/cart/show/{userId}', [CartController::class, 'showCart'])->name('cart.show');
+// routes/web.php
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
