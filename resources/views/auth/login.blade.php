@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #B8C1EC;
+            --primary: #232946;
+            --secondary: #EEBBC3;
+            --thirty: #B8C1EC;
+            --bg-main: #121629;
+            --card: #FFFFFE;
         }
+
         body {
             background: rgba(18, 22, 41, 1);
             height: 100vh;
@@ -18,6 +24,7 @@
             font-family: Arial, sans-serif;
             overflow: hidden;
         }
+
         .card {
             background: rgba(255, 255, 255, 0.1);
             border: none;
@@ -25,13 +32,16 @@
             backdrop-filter: blur(10px);
             padding: 20px;
             width: 100%;
-            max-width: 700px; /* Lebar card diperbesar dari 400px menjadi 500px */
+            max-width: 700px;
+            /* Lebar card diperbesar dari 400px menjadi 500px */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border: 1.5px solid var(--primary);
         }
+
         .form-label {
             color: #fff;
         }
+
         .form-control {
             background: transparent;
             border: none;
@@ -39,10 +49,12 @@
             border-radius: 0;
             color: #fff;
         }
+
         .form-control:focus {
             box-shadow: none;
             border-color: #fff;
         }
+
         .btn-primary {
             background: rgba(255, 255, 255, 0.3);
             border: none;
@@ -50,32 +62,39 @@
             padding: 10px;
             color: #fff;
         }
+
         .btn-primary:hover {
             background: rgba(255, 255, 255, 0.5);
         }
-        .card-header, .card-body, .mt-3 p {
+
+        .card-header,
+        .card-body,
+        .mt-3 p {
             color: #fff;
         }
+
         .mt-3 a {
             color: #fff;
             text-decoration: underline;
         }
+
         .circle {
             position: absolute;
             top: -5%;
             left: -5%;
-            width:600px;
+            width: 600px;
             aspect-ratio: 1/1;
             border-radius: 100%;
             background: rgba(238, 187, 195, 0.63);
             filter: blur(200px);
             -webkit-filter: blur(200px);
         }
+
         .circle2 {
             position: absolute;
             bottom: -5%;
             right: -5%;
-            width:600px;
+            width: 600px;
             aspect-ratio: 1/1;
             border-radius: 100%;
             background: rgba(184, 193, 236, 0.63);
@@ -84,11 +103,12 @@
         }
     </style>
 </head>
+
 <body>
     <div class="circle"></div>
     <div class="circle2"></div>
     <div class="card">
-        
+
         <div class="card-header text-center">
             <h2>Sign In</h2>
         </div>
@@ -112,5 +132,5 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
 
+</html>

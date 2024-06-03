@@ -24,6 +24,7 @@
             background-color: var(--bg-main) !important;
             display: flex;
             justify-content: center;
+            overflow-x: hidden;
             /* align-items: center; */
         }
 
@@ -51,11 +52,14 @@
             font-weight: bold;
             color: var(--primary);
         }
+
         .buttonExpression {
             display: flex;
             gap: 30px;
         }
-        .circleRight, .circleLeft {
+
+        .circleRight,
+        .circleLeft {
             position: absolute;
             width: 700px;
             aspect-ratio: 1/1;
@@ -65,10 +69,12 @@
             bottom: -5px;
             z-index: -1;
         }
+
         .circleRight {
             background-color: rgba(184, 193, 236, 0.63);
             left: -170px;
         }
+
         .circleLeft {
             background-color: rgba(238, 187, 195, 0.63);
             right: -170px;
@@ -93,7 +99,18 @@
                     <div class="col-md-8">
                         <div class="card-body">
                             <h2 class="card-title">{{ $product->nama_product }}</h2>
-                            <p class="card-text lead">{{ $product->spesifikasi }}</p>
+                            <p class="card-text lead">
+                                Spesifikasi:
+                                <br>
+                                @php
+                                    $specification = explode("\n", $product->spesifikasi); 
+                                @endphp
+
+                                @foreach ($specification as $spec)
+                                    {{ $spec }}<br>
+                                @endforeach
+                                {{-- {{ $product->spesifikasi }} --}}
+                            </p>
                             <p class="card-text lead">Harga: {{ $product->harga }}</p>
                             <div class="d-flex align-items-center">
                                 <button type="button" class="btn btn-secondary btn-sm"
@@ -198,11 +215,17 @@
                 var guide = '';
 
                 if (selectedMethod === 'BCA') {
-                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BCA</h5><p>Transfer ke rekening BCA 1234567890 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
+                    guide =
+                        '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BCA</h5><p>Transfer ke rekening BCA 1234567890 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' +
+                        totalHarga + '</p></div></div>';
                 } else if (selectedMethod === 'BRI') {
-                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BRI</h5><p>Transfer ke rekening BRI 9876543210 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
+                    guide =
+                        '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BRI</h5><p>Transfer ke rekening BRI 9876543210 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' +
+                        totalHarga + '</p></div></div>';
                 } else if (selectedMethod === 'BNI') {
-                    guide = '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' + totalHarga + '</p></div></div>';
+                    guide =
+                        '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' +
+                        totalHarga + '</p></div></div>';
                 }
 
                 $('#payment-guide').html(guide);

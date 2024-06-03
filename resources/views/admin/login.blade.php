@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
+
 <body>
+    <div class="circle"></div>
+    <div class="circle2"></div>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">Login Admin</div>
+                    <h3 class="card-header">Sign In Admin</h3>
                     <div class="card-body">
-                        @if($errors->any())
+                        @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
-                                    @foreach($errors->all() as $error)
+                                    @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach
                                 </ul>
@@ -52,4 +57,5 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
