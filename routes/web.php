@@ -36,6 +36,7 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 // Route untuk melihat profil
 Route::get('/profile/view', [ProfileController::class, 'view'])->name('profile.view')->middleware('auth');
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::get('/profile/riwayatPesanan', [ProfileController::class, 'riwayatPesanan'])->name('profile.riwayatPesanan');
 Route::match(['put', 'patch'], 'profile/update', [ProfileController::class, 'update']);
 
 // Route untuk logout

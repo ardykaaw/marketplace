@@ -76,29 +76,59 @@
                     <p> <a style="text-decoration: none; color: white" href="{{ route('logout') }}">LogOut</a> </p>
                 @endif
             </div>
+            {{-- detail profil --}}
             <div class="col-md-8">
-                <form action="{{ route('profile.update') }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="name" name="name"
-                            value="{{ optional(Auth::user())->name }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email"
-                            value="{{ optional(Auth::user())->email }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Alamat</label>
-                        <input type="text" class="form-control" id="address" name="address"
-                            value="{{ optional(Auth::user())->address }}" placeholder="Tambahkan alamat" required>
-                    </div>
-                    <div class="buttonContactUs">
-                        <button type="submit" class="btn btn-primary">Perbarui Profil</button>
-                    </div>
-                </form>
+                @if (Auth::user())
+                    @if (Auth::user()->orders)
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Riwayat Pesanan</h5>
+                                <div class="scrollable-table">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID Pesanan</th>
+                                                <th>Gambar</th> <!-- Kolom baru untuk gambar -->
+                                                <th>Produk</th>
+                                                <th>Jumlah</th>
+                                                <th>Status</th>
+                                                <th>Tanggal</th>
+                                                <th>Aksi</th> <!-- Kolom baru untuk aksi -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse (Auth::user()->orders as $order)
+                                                <tr>
+                                                    <td>{{ $order->id }}</td>
+                                                    <td><img src="{{ asset($order->product->image_path) }}"
+                                                            alt="Gambar Produk" style="width: 50px; height: auto;"></td>
+                                                    <!-- Menampilkan gambar produk -->
+                                                    <td>{{ $order->product->nama_product }}</td>
+                                                    <td>{{ $order->product->harga }}</td>
+                                                    <td>{{ $order->status }}</td>
+                                                    <td>{{ $order->created_at->format('d M Y') }}</td>
+                                                    <td><button class="btn btn-primary" data-toggle="modal"
+                                                            data-target="#reviewModal"
+                                                            onclick="setOrderId({{ $order->id }})">Beri
+                                                            Ulasan</button>
+                                                        <button class="btn btn-danger"
+                                                            onclick="deleteOrder({{ $order->id }})">Hapus</button>
+                                                    </td> <!-- Tautan untuk memberikan ulasan dan tombol hapus -->
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="7">Tidak ada riwayat pesanan.</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @else
+                    <p class="card-text">Pengguna tidak ditemukan.</p>
+                @endif
             </div>
         </div>
     </div>

@@ -27,6 +27,11 @@ class ProfileController extends Controller
         return view('profile.edit', compact('user'));
     }
 
+    public function riwayatPesanan()
+    {
+        $user = auth()->user();
+        return view('profile.riwayatPesanan', compact('user'));
+    }
     public function update(Request $request)
     {
         \Log::info('Request method:', ['method' => $request->method()]);

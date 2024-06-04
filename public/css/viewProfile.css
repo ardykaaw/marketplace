@@ -37,13 +37,37 @@
 }
 
 .section {
-  padding: 0 40px;
+    padding: 0 50px;
 }
 .emailSidebarleft {
-  font-weight:lighter;
-  font-size: 13px;
-  color: #d0cccc;
+    font-weight: lighter;
+    font-size: 13px;
+    color: #d0cccc;
 }
 body {
-  overflow: hidden;
+    /* overflow: hidden; */
+}
+
+.sidebarLeft a {
+    text-decoration: none;
+    color: white;
+}
+.sidebarRight {
+    position: relative;
+    overflow: hidden;
+}
+
+.circleProfilBlue, .circleProfilPink {
+    position: absolute;
+    width: 350px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    filter: blur(140px);
+    -webkit-filter: blur(140px);
+}
+.circleProfilBlue {
+    background: rgba(184, 193, 236, 0.63);
+}
+.circleProfilPink {
+    background: rgba(238, 187, 195, 0.63);
 }

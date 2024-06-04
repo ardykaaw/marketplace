@@ -63,20 +63,25 @@
             <div class="col-md-4 sidebarLeft">
                 @if (Auth::user())
                     <p>{{ Auth::user()->name }}
+                        <br>
                         <span class="emailSidebarleft">
                             {{ Auth::user()->email }}
                         </span>
                     </p>
                     <p>Akun saya</p>
-                    <p>Riwayat pesanan</p>
-                    <p>Edit profile</p>
-                    <p>Log Out</p>
+                    <p> <a style="text-decoration: none; color: white"
+                            href="{{ route('profile.riwayatPesanan') }}">Riwayat pesanan</a> </p>
+                    <p> <a style="text-decoration: none; color: white" href="{{ route('profile.edit') }}">Edit
+                            profile</a> </p>
+                    <p> <a style="text-decoration: none; color: white" href="{{ route('logout') }}">LogOut</a> </p>
                 @endif
             </div>
             {{-- detail profil --}}
             <div class="col-md-8">
                 @if (Auth::user())
-                    <div class="card">
+                    <div class="card sidebarRight">
+                        <div class="circleProfilBlue"></div>
+                        <div class="circleProfilPink"></div>
                         <div class="card-body">
                             <h5 class="card-title">Detail Profil</h5>
                             <p class="card-text"><strong>Nama:</strong> {{ Auth::user()->name }}</p>
