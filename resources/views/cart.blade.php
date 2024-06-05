@@ -93,7 +93,7 @@
                     </thead>
                     <tbody>
                         @foreach($cart->products as $product)
-                            <tr id="product-row-{{ $product->id }}">
+                            <tr id="product-row-{{ $product->id }}" data-product-id="{{ $product->id }}">
                                 <td><img src="{{ asset($product->image_path ?? 'path/to/default/image.png') }}" alt="Product Image" width="100" height="100"></td>
                                 <td>{{ $product->nama_product ?? 'Nama Produk Default' }}</td>
                                 <td>Rp{{ number_format($product->harga ?? 0) }}</td>
@@ -114,14 +114,13 @@
         </div>
         <div class="cart-summary">
             <h4>Summary</h4>
+            <p>Jumlah Item: <span id="item-count">{{ $cart->products->sum('pivot.quantity') }}</span></p>
             <p>Subtotal: Rp<span id="subtotal">{{ number_format($cart->products->sum(function($product) { return ($product->harga ?? 0) * $product->pivot->quantity; })) }}</span></p>
-            <p>Estimated Shipping & Handling: Rp0</p>
-            <p>Tax: Rp0</p>
             <p class="total">Total: Rp<span id="total">{{ number_format($cart->products->sum(function($product) { return ($product->harga ?? 0) * $product->pivot->quantity; })) }}</span></p>
-            <button class="btn btn-primary btn-block checkout-button">Checkout</button>
+            <button class="btn btn-primary btn-block checkout-button" onclick="checkout()">Checkout</button>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
@@ -134,11 +133,13 @@
                     type: 'POST',
                     data: {
                         product_id: productId,
-                        quantity: newQuantity
+                        quantity: newQuantity,
+                        _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
                         document.getElementById('quantity-' + productId).innerText = newQuantity;
-                        document.getElementById('total-' + productId).innerText = 'Rp' + newQuantity * price;
+                        document.getElementById('total-' + productId).innerText = 'Rp' + (newQuantity * price).toLocaleString();
+                        updateSummary();
                     },
                     error: function(xhr) {
                         console.log('Error:', xhr.responseText);
@@ -152,13 +153,50 @@
                 url: '/cart/remove',
                 type: 'POST',
                 data: {
-                    product_id: productId
+                    product_id: productId,
+                    _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
                     document.getElementById('product-row-' + productId).remove();
+                    updateSummary();
                 },
                 error: function(xhr) {
                     console.log('Error:', xhr.responseText);
+                }
+            });
+        }
+
+        function updateSummary() {
+            let subtotal = 0;
+            document.querySelectorAll('td[id^="total-"]').forEach(function(element) {
+                subtotal += parseInt(element.innerText.replace('Rp', '').replace(/\./g, ''));
+            });
+            document.getElementById('subtotal').innerText = subtotal.toLocaleString();
+            document.getElementById('total').innerText = subtotal.toLocaleString();
+        }
+
+        function checkout() {
+            let products = [];
+            document.querySelectorAll('.cart-item').forEach(item => {
+                let productId = item.getAttribute('data-product-id');
+                let quantity = parseInt(document.getElementById('quantity-' + productId).innerText);
+                products.push({product_id: productId, quantity: quantity});
+            });
+
+            $.ajax({
+                url: '/orders',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    products: products,
+                    payment_method: 'credit_card' // Contoh metode pembayaran
+                },
+                success: function(response) {
+                    alert('Checkout berhasil!');
+                    window.location.href = '{{ route("profile.riwayatPesanan") }}';
+                },
+                error: function(xhr) {
+                    alert('Error: ' + xhr.responseText);
                 }
             });
         }

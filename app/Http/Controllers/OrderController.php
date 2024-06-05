@@ -19,7 +19,7 @@ class OrderController extends Controller
         // Validasi data pesanan
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'payment_method' => 'required|in:BCA,BRI,BNI',
+            'payment_method' => 'required|in:credit_card,bank_transfer', // Sesuaikan dengan metode yang valid
         ]);
 
         // Simpan pesanan ke database
@@ -30,7 +30,7 @@ class OrderController extends Controller
         $order->status = 'pending';
         $order->save();
 
-        // Redirect ke halaman sukses atau halaman lain yang diinginkan
+        // Redirect ke halaman riwayat pesanan
         return redirect()->route('orders.success');
     }
 

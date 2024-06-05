@@ -104,7 +104,7 @@
                                                             alt="Gambar Produk" style="width: 50px; height: auto;"></td>
                                                     <!-- Menampilkan gambar produk -->
                                                     <td>{{ $order->product->nama_product }}</td>
-                                                    <td>{{ $order->product->harga }}</td>
+                                                    <td>{{ $order->quantity }}</td>
                                                     <td>{{ $order->status }}</td>
                                                     <td>{{ $order->created_at->format('d M Y') }}</td>
                                                     <td><button class="btn btn-primary" data-toggle="modal"

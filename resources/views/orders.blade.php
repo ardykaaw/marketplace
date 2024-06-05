@@ -127,6 +127,7 @@
                                         quantityInput.value = currentValue - 1;
                                     }
                                     document.getElementById('orderQuantity').value = quantityInput.value;
+                                    document.getElementById('cartQuantity').value = quantityInput.value;
                                 }
 
                                 function increaseQuantity() {
@@ -134,16 +135,15 @@
                                     var currentValue = parseInt(quantityInput.value);
                                     quantityInput.value = currentValue + 1;
                                     document.getElementById('orderQuantity').value = quantityInput.value;
+                                    document.getElementById('cartQuantity').value = quantityInput.value;
                                 }
                             </script>
                             <div class="buttonExpression">
                                 <div class="buttonBuyNow">
-                                    <button type="button" class="btn mt-3" data-toggle="modal"
-                                        data-target="#paymentModal" data-product-id="{{ $product->id }}">Beli
-                                        Sekarang</button>
+                                    <button type="button" class="btn mt-3" data-toggle="modal" data-target="#paymentModal">Beli Sekarang</button>
                                 </div>
                                 <div class="buttonAddCart">
-                                    <form action="{{ route('cart.add') }}" method="POST">
+                                    <form action="{{ route('cart.add') }}" method="POST" id="addToCartForm">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <input type="hidden" name="quantity" id="cartQuantity" value="1">
@@ -167,8 +167,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">\
-                        <form action="{{ route('orders.store') }}" method="POST">
+                    <div class="modal-body">
+                        <form action="{{ route('orders.store') }}" method="POST" id="paymentForm">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                             <input type="hidden" name="quantity" id="orderQuantity" value="1">
@@ -226,6 +226,43 @@
                 }
 
                 $('#payment-guide').html(guide);
+            });
+
+            $('#addToCartForm').submit(function(event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = form.serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: form.attr('action'),
+                    data: formData,
+                    success: function(response) {
+                        alert('Produk berhasil ditambahkan ke keranjang');
+                        var cartCount = parseInt($('#cart-count').text()) || 0;
+                        $('#cart-count').text(cartCount + 1);
+                    },
+                    error: function() {
+                        alert('Error adding product to cart');
+                    }
+                });
+            });
+
+            $('#paymentForm').submit(function(event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = form.serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: form.attr('action'),
+                    data: formData,
+                    success: function(response) {
+                        alert('Pembayaran berhasil dikonfirmasi');
+                        $('#paymentModal').modal('hide');
+                    },
+                    error: function() {
+                        alert('Error confirming payment. Please try again.');
+                    }
+                });
             });
         });
 

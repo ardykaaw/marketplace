@@ -159,3 +159,9 @@ Route::post('/cart/update', [App\Http\Controllers\CartController::class, 'update
 
 // Rute untuk menghapus produk dari keranjang
 Route::post('/cart/remove', [App\Http\Controllers\CartController::class, 'removeProductFromCart']);
+
+// Route untuk menangani pembelian
+Route::post('/order/success', [OrderController::class, 'store'])->name('orders.success');
+
+// Route untuk halaman sukses
+Route::get('/order/success', [OrderController::class, 'success'])->name('orders.success');
