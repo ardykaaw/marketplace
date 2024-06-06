@@ -35,7 +35,7 @@
             max-width: 700px;
             /* Lebar card diperbesar dari 400px menjadi 500px */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1.5px solid var(--primary);
+            border: 1.5px solid var(--thirty);
         }
 
         .form-label {
