@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
-use Illuminate\Support\Facades\Log; // Tambahkan ini untuk mengatasi masalah undefined type Log
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -17,21 +17,28 @@ class OrderController extends Controller
         }
 
         // Validasi data pesanan
-        $request->validate([
+        $validatedData = $request->validate([
             'product_id' => 'required|exists:products,id',
-            'payment_method' => 'required|in:credit_card,bank_transfer', // Sesuaikan dengan metode yang valid
+            'payment_method' => 'required|in:credit_card,bank_transfer',
         ]);
 
         // Simpan pesanan ke database
         $order = new Order();
-        $order->product_id = $request->input('product_id');
-        $order->user_id = auth()->id();
-        $order->payment_method = $request->input('payment_method');
-        $order->status = 'pending';
-        $order->save();
+        $order->fill([
+            'product_id' => $validatedData['product_id'],
+            'user_id' => auth()->id(),
+            'payment_method' => $validatedData['payment_method'],
+            'status' => 'pending',
+        ]);
 
-        // Redirect ke halaman riwayat pesanan
-        return redirect()->route('orders.success');
+        try {
+            $order->save();
+            // Redirect dengan pesan sukses
+            return redirect()->route('orders.success')->with('success', 'Pembayaran berhasil dikonfirmasi');
+        } catch (\Exception $e) {
+            Log::error('Error processing payment: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error confirming payment. Please try again.');
+        }
     }
 
     public function success()
@@ -48,24 +55,24 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::all();
-        foreach ($orders as $order) {
-            echo $order->user_id; // Langsung mengakses user_id
-        }
-        // Atau kirim data ke view
         return view('orders.index', compact('orders'));
     }
 
     public function delete($id)
     {
-        Log::info('Delete request received for order ID: ' . $id); // Gunakan Log dengan namespace yang benar
-        $order = Order::find($id);
-        if ($order) {
+        try {
+            $order = Order::findOrFail($id);
+
+            // Cek apakah pengguna yang login adalah pemilik pesanan
+            if ($order->user_id !== auth()->id()) {
+                return response()->json(['error' => 'Unauthorized'], 403);
+            }
+
             $order->delete();
-            Log::info('Order deleted successfully'); // Gunakan Log dengan namespace yang benar
             return response()->json(['success' => 'Pesanan berhasil dihapus']);
-        } else {
-            Log::error('Order not found'); // Gunakan Log dengan namespace yang benar
-            return response()->json(['error' => 'Pesanan tidak ditemukan'], 404);
+        } catch (\Exception $e) {
+            Log::error('Error deleting order: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
 }

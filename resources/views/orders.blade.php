@@ -259,7 +259,7 @@
                         alert('Pembayaran berhasil dikonfirmasi');
                         $('#paymentModal').modal('hide');
                     },
-                    error: function() {
+                    error: function(xhr) {
                         alert('Error confirming payment. Please try again.');
                     }
                 });

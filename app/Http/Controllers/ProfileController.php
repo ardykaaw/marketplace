@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Order; // Tambahkan ini untuk mendefinisikan tipe Order
+use Illuminate\Support\Facades\Auth;
+
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        
         $user = auth()->user();
         return view('profile.index', compact('user'));
     }
@@ -32,17 +34,22 @@ class ProfileController extends Controller
         $user = auth()->user();
         return view('profile.riwayatPesanan', compact('user'));
     }
+    
     public function update(Request $request)
     {
-        \Log::info('Request method:', ['method' => $request->method()]);
-        $user = auth()->user();
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'sometimes|nullable|min:6|confirmed'
+            'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
+            'address' => 'required|string|max:255',
         ]);
-        User::where('id', $user->id)->update($validatedData);
-        return redirect()->route('profile.view');
+
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->save(); // Ganti save() dengan update()
+
+        return redirect()->route('profile.view')->with('success', 'Profil berhasil diperbarui.');
     }
 
     /**
@@ -60,5 +67,19 @@ class ProfileController extends Controller
             return redirect()->route('products.index')->with('error', 'Produk tidak ditemukan.');
         }
     }
-}
 
+    public function delete($id)
+    {
+        $order = Order::find($id);
+        if (!$order) {
+            return response()->json(['error' => 'Pesanan tidak ditemukan'], 404);
+        }
+
+        if ($order->user_id !== auth()->id()) {
+            return response()->json(['error' => 'Tidak memiliki izin'], 403);
+        }
+
+        $order->delete();
+        return response()->json(['success' => 'Pesanan berhasil dihapus']);
+    }
+}

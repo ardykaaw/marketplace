@@ -37,7 +37,7 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::get('/profile/view', [ProfileController::class, 'view'])->name('profile.view')->middleware('auth');
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::get('/profile/riwayatPesanan', [ProfileController::class, 'riwayatPesanan'])->name('profile.riwayatPesanan');
-Route::match(['put', 'patch'], 'profile/update', [ProfileController::class, 'update']);
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 // Route untuk logout
 Route::get('/logout', function () {

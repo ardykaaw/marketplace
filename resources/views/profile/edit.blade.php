@@ -5,50 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil</title>
-    <style>
-        /* .sidebarLeft {
-        color: white;
-      }
-        .card {
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .scrollable-table {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .loader {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            border: 16px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 80px;
-            height: 80px;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        } */
-    </style>
-    <!-- Di dalam <head> -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/viewProfile.css') }}">
 </head>
@@ -69,11 +25,9 @@
                         </span>
                     </p>
                     <p> <a href="{{ route('profile.view') }}">Akun saya</a> </p>
-                    <p> <a style="text-decoration: none; color: white"
-                            href="{{ route('profile.riwayatPesanan') }}">Riwayat pesanan</a> </p>
-                    <p> <a style="text-decoration: none; color: white" href="{{ route('profile.edit') }}">Edit
-                            profile</a> </p>
-                    <p> <a style="text-decoration: none; color: white" href="{{ route('logout') }}">LogOut</a> </p>
+                    <p> <a class="text-white text-decoration-none" href="{{ route('profile.riwayatPesanan') }}">Riwayat pesanan</a> </p>
+                    <p> <a class="text-white text-decoration-none" href="{{ route('profile.edit') }}">Edit profil</a> </p>
+                    <p> <a class="text-white text-decoration-none" href="{{ route('logout') }}">LogOut</a> </p>
                 @endif
             </div>
             <div class="col-md-8">
@@ -107,7 +61,7 @@
     <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div the="modal-header">
+                <div class="modal-header">
                     <h5 class="modal-title" id="reviewModalLabel">Beri Ulasan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -166,7 +120,6 @@
         }
     </script>
 
-    <!-- Sebelum penutup </body> -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
