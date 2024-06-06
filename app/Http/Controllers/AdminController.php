@@ -16,15 +16,9 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        $products = Product::all();
-        $orders = Order::all();
-        $reviews = Review::all();
-
-        // Memastikan bahwa data produk tidak kosong sebelum dikirim ke view
-        if ($products->isEmpty()) {
-            // Menampilkan pesan jika tidak ada produk yang tersedia
-            return view('admin.dashboard', ['message' => 'Tidak ada produk yang tersedia.']);
-        }
+        $products = Product::paginate(10); // Menggunakan pagination
+        $orders = Order::paginate(10); // Menggunakan pagination
+        $reviews = Review::paginate(10); // Menggunakan pagination
 
         return view('admin.dashboard', compact('products', 'orders', 'reviews'));
     }
@@ -113,4 +107,3 @@ class AdminController extends Controller
         return redirect()->route('admin.orders')->with('success', 'Order berhasil dikonfirmasi.');
     }
 }
-
