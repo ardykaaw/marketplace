@@ -4,9 +4,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product; // Tambahkan ini untuk mengatasi masalah "Class 'Product' not found"
-use App\Models\Order; // Pastikan model Order sudah ada dan terhubung dengan database yang benar
-use App\Models\User; // Pastikan model User sudah ada dan terhubung dengan database yang benar
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         $products = Product::all(['nama_product', 'harga', 'spesifikasi']);
         $totalUsers = User::count();
-        $totalOrders = Order::count(); // Menghitung jumlah total pesanan
+        $totalOrders = Order::count();
         $monthlyRevenue = Order::whereMonth('created_at', now()->month)
                                ->whereYear('created_at', now()->year)
                                ->sum('total');

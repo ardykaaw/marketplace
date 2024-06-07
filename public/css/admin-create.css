@@ -1,0 +1,29 @@
+
+.sidebar {
+    background-color: #343a40;
+    height: 100vh;
+    padding: 20px 0;
+    width: 400px; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.sidebar a {
+    color: #ffffff; 
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+    font-size: 22px;
+}
+.sidebar a:hover {
+    background-color: #495057; 
+}
+
+.content {
+    margin-left: 400px; 
+    padding: 20px;
+    overflow: auto;
+}

@@ -83,7 +83,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
 
-    Route::get('/admin/dashboard', [DashboardController::class, 'stats'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'showProducts'])->name('admin.dashboard');
     Route::get('/admin/products/create', [AdminController::class, 'createProduct'])->name('admin.create_product');
     Route::post('/admin/products', [AdminController::class, 'storeProduct'])->name('admin.store_product');
     Route::get('/admin/products/edit', [AdminController::class, 'edit'])->name('admin.edit_product');
@@ -131,7 +131,7 @@ Route::get('admin/register', function () {
 Route::post('admin/register', [AdminRegisterController::class, 'register'])->name('admin.register.submit');
 
 // Added route for confirming orders
-Route::post('/admin/orders/{order}/confirm', [AdminController::class, 'confirmOrder'])->name('admin.orders_confirm');
+Route::post('/admin/orders/{order}/confirm', [AdminController::class, 'confirmOrder'])->name('admin.confirmOrder');
 
 
 // Route untuk menampilkan halaman keranjang
@@ -168,3 +168,5 @@ Route::post('/order/success', [OrderController::class, 'store'])->name('orders.s
 
 // Route untuk halaman sukses
 Route::get('/order/success', [OrderController::class, 'success'])->name('orders.success');
+
+

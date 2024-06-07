@@ -106,4 +106,10 @@ class AdminController extends Controller
 
         return redirect()->route('admin.orders')->with('success', 'Order berhasil dikonfirmasi.');
     }
+
+    public function showProducts()
+    {
+        $products = Product::all();
+        return view('admin.dashboard', compact('products'));
+    }
 }
