@@ -1,0 +1,70 @@
+body {
+    background-color: #2c2f33;
+    color: #fff;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    background-color: #232946;
+    height: 100vh;
+    padding: 20px 0;
+    width: 400px; /* Lebar sidebar diubah dari default menjadi 250px */
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: #1f1f1f;
+}
+
+.content {
+    margin-left: 400px; /* Margin kiri diubah sesuai dengan lebar sidebar baru */
+    padding: 20px;
+    overflow: auto;
+}
+
+.card {
+    background-color: #3a3f47;
+    border: none;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card h5, .card p {
+    color: #fff;
+    margin: 0;
+    padding: 10px;
+}
+
+.table {
+    color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    border-top: 1px solid #444;
+    padding: 10px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #2c2f33;
+}
+
+.table tr:nth-child(even) {
+    background-color: #3a3f47;
+}

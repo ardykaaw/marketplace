@@ -5,19 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang Kami</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .about-section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .about-image {
-            flex: 1;
-        }
-        .about-description {
-            flex: 2;
-        }
-    </style>
+    <link href="{{ asset('css/about.css') }}" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">

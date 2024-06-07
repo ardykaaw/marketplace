@@ -24,14 +24,15 @@ class OrderController extends Controller
             ]);
 
             // Simpan pesanan ke database
-            $order = new Order();
-            $order->fill([
-                'product_id' => $validatedData['product_id'],
-                'user_id' => auth()->id(),
-                'payment_method' => $validatedData['payment_method'],
-                'status' => 'pending',
-            ]);
-            $order->save();
+            $user = auth()->user();
+            foreach ($request->products as $prod) {
+                $order = new Order();
+                $order->user_id = $user->id;
+                $order->product_id = $prod['product_id'];
+                $order->quantity = $prod['quantity'];
+                $order->status = 'pending';
+                $order->save();
+            }
 
             // Redirect dengan pesan sukses
             return redirect()->route('orders.success')->with('success', 'Pembayaran berhasil dikonfirmasi');
@@ -75,19 +76,15 @@ class OrderController extends Controller
 
     public function delete($id)
     {
-        try {
-            $order = Order::findOrFail($id);
-
-            // Cek apakah pengguna yang login adalah pemilik pesanan
-            if ($order->user_id !== auth()->id()) {
-                return response()->json(['error' => 'Unauthorized'], 403);
-            }
-
+        Log::info("Attempting to delete order with ID: $id");
+        $order = Order::find($id);
+        if ($order) {
             $order->delete();
+            Log::info("Order deleted successfully.");
             return response()->json(['success' => 'Pesanan berhasil dihapus']);
-        } catch (\Exception $e) {
-            Log::error('Error deleting order: ' . $e->getMessage());
-            return response()->json(['error' => 'Internal Server Error'], 500);
+        } else {
+            Log::error("Order not found.");
+            return response()->json(['error' => 'Pesanan tidak ditemukan'], 404);
         }
     }
 }

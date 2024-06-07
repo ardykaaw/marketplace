@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 </head>
 
-<body>
+<body></body>
     <div class="circle"></div>
     <div class="circle2"></div>
     <div class="container mt-5">
@@ -23,10 +23,6 @@
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama</label>
                                 <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>

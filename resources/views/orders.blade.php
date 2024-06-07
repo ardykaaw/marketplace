@@ -256,8 +256,7 @@
                     url: form.attr('action'),
                     data: formData,
                     success: function(response) {
-                        alert('Pembayaran berhasil dikonfirmasi');
-                        $('#paymentModal').modal('hide');
+                        window.location.href = '{{ route('orders.success') }}'; // Redirect ke halaman sukses
                     },
                     error: function(xhr) {
                         alert('Error confirming payment. Please try again.');

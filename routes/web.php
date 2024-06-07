@@ -83,7 +83,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
 
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [DashboardController::class, 'stats'])->name('admin.dashboard');
     Route::get('/admin/products/create', [AdminController::class, 'createProduct'])->name('admin.create_product');
     Route::post('/admin/products', [AdminController::class, 'storeProduct'])->name('admin.store_product');
     Route::get('/admin/products/edit', [AdminController::class, 'edit'])->name('admin.edit_product');
@@ -121,10 +121,13 @@ Route::middleware(['auth:admin'])->group(function () {
         return redirect()->route('admin.login');
     })->name('admin.dashboard');
 });
-Route::delete('/admin/products/{id}/delete', [ProdukController::class, 'deleteProduct'])->name('admin.delete_product');
+Route::post('/admin/products/{id}/delete', [ProdukController::class, 'deleteProduct'])->name('admin.delete_product');
 
 // Route untuk registrasi admin
-Route::get('admin/register', [AdminRegisterController::class, 'showRegistrationForm'])->name('admin.register');
+Route::get('admin/register', function () {
+    return view('admin.register');
+})->name('admin.register');
+
 Route::post('admin/register', [AdminRegisterController::class, 'register'])->name('admin.register.submit');
 
 // Added route for confirming orders
@@ -144,7 +147,7 @@ Route::get('/review/create', [ReviewController::class, 'create'])->name('review.
 Route::post('/review/store', [ReviewController::class, 'store'])->name('review.store');
 
 // Added route for deleting orders
-Route::delete('/order/delete/{id}', 'OrderController@delete')->name('order.delete');
+Route::post('/order/delete/{id}', [OrderController::class, 'delete'])->name('order.delete');
 
 
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');

@@ -1,0 +1,63 @@
+:root {
+    --primary: #232946;
+    --secondary: #EEBBC3;
+    --thirty: #B8C1EC;
+    --bg-main: #121629;
+    --card: #FFFFFE;
+}
+html body {
+    background-color: var(--bg-main);
+    color: black;
+    overflow: hidden;
+}
+.cart-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 100px; /* Turunkan sedikit semua card */
+}
+.cart-items {
+    flex: 0 0 70%;
+    background-color: var(--card);
+    padding: 20px;
+    border-radius: 5px;
+    max-height: 500px; /* Set a max height for the scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+.cart-summary {
+    flex: 0 0 25%;
+    background-color: var(--card);
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+.cart-item-details {
+    flex: 1;
+    margin-left: 20px;
+}
+.cart-item-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.cart-summary h4, .cart-summary p {
+    margin: 0;
+}
+.cart-summary .total {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.checkout-button {
+    position: absolute;
+    bottom: 20px;
+    width: 90%;
+}

@@ -6,71 +6,7 @@
     <title>Keranjang Belanja</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #232946;
-            --secondary: #EEBBC3;
-            --thirty: #B8C1EC;
-            --bg-main: #121629;
-            --card: #FFFFFE;
-        }
-        html body {
-            background-color: var(--bg-main);
-            color: black;
-            overflow: hidden;
-        }
-        .cart-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 100px; /* Turunkan sedikit semua card */
-        }
-        .cart-items {
-            flex: 0 0 70%;
-            background-color: var(--card);
-            padding: 20px;
-            border-radius: 5px;
-            max-height: 500px; /* Set a max height for the scrollable area */
-            overflow-y: auto; /* Enable vertical scrolling */
-        }
-        .cart-summary {
-            flex: 0 0 25%;
-            background-color: var(--card);
-            padding: 20px;
-            border-radius: 5px;
-            position: relative;
-        }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .cart-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-        }
-        .cart-item-details {
-            flex: 1;
-            margin-left: 20px;
-        }
-        .cart-item-actions {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .cart-summary h4, .cart-summary p {
-            margin: 0;
-        }
-        .cart-summary .total {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        .checkout-button {
-            position: absolute;
-            bottom: 20px;
-            width: 90%;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset('css/cart.css')}}">
 </head>
 <body>
     <div>
@@ -83,6 +19,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Gambar</th>
                             <th>Nama Produk</th>
                             <th>Harga</th>
@@ -92,8 +29,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($cart->products as $product)
+                        @foreach($cart->products as $index => $product)
                             <tr id="product-row-{{ $product->id }}" data-product-id="{{ $product->id }}">
+                                <td>{{ $index + 1 }}</td>
                                 <td><img src="{{ asset($product->image_path ?? 'path/to/default/image.png') }}" alt="Product Image" width="100" height="100"></td>
                                 <td>{{ $product->nama_product ?? 'Nama Produk Default' }}</td>
                                 <td>Rp{{ number_format($product->harga ?? 0) }}</td>

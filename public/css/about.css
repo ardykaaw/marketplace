@@ -1,0 +1,12 @@
+
+.about-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.about-image {
+    flex: 1;
+}
+.about-description {
+    flex: 2;
+}
