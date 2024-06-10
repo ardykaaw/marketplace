@@ -88,10 +88,9 @@ class AdminController extends Controller
 
     public function reviews()
     {
-        $reviews = Review::all();
+        $reviews = Review::with('user')->get(); // Gunakan eager loading
         return view('admin.reviews', compact('reviews'));
     }
-
     public function orderDetails(Order $order)
     {
         // Anda bisa menambahkan logika untuk mengambil data detail order

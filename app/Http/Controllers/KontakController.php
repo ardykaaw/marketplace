@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Review;
+use Illuminate\Support\Facades\DB;
 
 class KontakController extends Controller
 {
@@ -12,15 +13,26 @@ class KontakController extends Controller
         return view('kontak');
     }
 
-    public function store(Request $request)
+    public function submitKontak(Request $request)
     {
-        $review = new Review();
-        $review->user_id = $request->user_id; // Pastikan Anda memiliki user_id atau sesuaikan logika ini
-        $review->product_id = $request->product_id; // Sesuaikan dengan input form jika perlu
-        $review->rating = $request->rating; // Tambahkan input rating di form jika perlu
-        $review->comment = $request->pesan;
-        $review->save();
+        $validatedData = $request->validate([
+            'user_id' => 'required|integer',
+            'product_id' => 'required|integer',
+            'rating' => 'required|integer|min:1|max:5',
+            'nama' => 'required|string',
+            'email' => 'required|email',
+            'subject' => 'required|string',
+            'pesan' => 'required|string',
+        ]);
 
-        return redirect('/kontak')->with('success', 'Review telah berhasil disimpan.');
+        Review::create([
+            'user_id' => $validatedData['user_id'],
+            'product_id' => $validatedData['product_id'],
+            'rating' => $validatedData['rating'],
+            'comment' => $validatedData['pesan'],
+            'subject' => $validatedData['subject'],
+        ]);
+
+        return redirect()->back()->with('success', 'Review berhasil dikirim.');
     }
 }

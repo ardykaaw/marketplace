@@ -27,7 +27,7 @@ Route::get('/product/{id}', [ProdukController::class, 'show'])->name('orders');
 
 // Route untuk halaman kontak
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
-Route::post('/submit-kontak', [KontakController::class, 'store']);
+Route::post('/submit-kontak', [KontakController::class, 'submitKontak'])->name('submit.kontak');
 Route::get('/about', [AboutController::class, 'about'])->name('about');
 
 // Route untuk halaman profil
@@ -77,12 +77,18 @@ Route::get('/orders/success', function () {
     return view('orders.success');
 })->name('orders.success');
 
+// Route untuk login admin
+Route::get('admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+Route::post('admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+
+// Route untuk registrasi admin
+Route::get('admin/register', function () {
+    return view('admin.register');
+})->name('admin.register');
+Route::post('admin/register', [AdminRegisterController::class, 'register'])->name('admin.register.submit');
 
 // Route untuk dashboard admin dengan middleware auth untuk admin
 Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
-
     Route::get('/admin/dashboard', [AdminController::class, 'showProducts'])->name('admin.dashboard');
     Route::get('/admin/products/create', [AdminController::class, 'createProduct'])->name('admin.create_product');
     Route::post('/admin/products', [AdminController::class, 'storeProduct'])->name('admin.store_product');
@@ -94,50 +100,26 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
     Route::get('/admin/reviews', [AdminController::class, 'reviews'])->name('admin.reviews');
     Route::get('/admin/dashboard/stats', [DashboardController::class, 'stats'])->name('admin.stats'); // Added this line to include the stats route
+    Route::get('/admin/orders/{order}', [AdminController::class, 'orderDetails'])->name('admin.order_details');
+    Route::get('/admin/products/{id}/edit', [ProdukController::class, 'edit'])->name('admin.edit_product');
+    Route::post('/admin/products/{id}/delete', [ProdukController::class, 'destroy'])->name('admin.delete_product');
+    Route::get('/admin/manage-products', [ProdukController::class, 'manage'])->name('admin.manage_products');
+    Route::get('/admin/orders/{order}/edit', [AdminController::class, 'editOrder'])->name('admin.orders_edit');
+    Route::post('/admin/orders/{order}/confirm', [AdminController::class, 'confirmOrder'])->name('admin.confirmOrder');
 });
-// Tambahkan rute untuk detail order
-Route::get('/admin/orders/{order}', [AdminController::class, 'orderDetails'])->name('admin.order_details');
 
 // Route untuk halaman sukses
 Route::get('/sukses', function () {
     return view('sukses');
 });
 
-// Route untuk edit produk
-Route::get('/admin/products/{id}/edit', [ProdukController::class, 'edit'])->name('admin.edit_product');
-Route::post('/admin/products/{id}/delete', [ProdukController::class, 'destroy'])->name('admin.delete_product');
-
-Route::get('/admin/manage-products', [ProdukController::class, 'manage'])->name('admin.manage_products');
-
-// Menambahkan rute untuk mengedit pesanan di admin
-Route::get('/admin/orders/{order}/edit', [AdminController::class, 'editOrder'])->name('admin.orders_edit');
-
-// Route untuk login admin
-Route::get('admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-Route::post('admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
-
-Route::middleware(['auth:admin'])->group(function () {
-    Route::get('admin/dashboard', function () {
-        return redirect()->route('admin.login');
-    })->name('admin.dashboard');
-});
-Route::post('/admin/products/{id}/delete', [ProdukController::class, 'deleteProduct'])->name('admin.delete_product');
-
-// Route untuk registrasi admin
-Route::get('admin/register', function () {
-    return view('admin.register');
-})->name('admin.register');
-
-Route::post('admin/register', [AdminRegisterController::class, 'register'])->name('admin.register.submit');
-
-// Added route for confirming orders
-Route::post('/admin/orders/{order}/confirm', [AdminController::class, 'confirmOrder'])->name('admin.confirmOrder');
-
+// Added route for deleting orders
+Route::post('/order/delete/{id}', [OrderController::class, 'delete'])->name('order.delete');
 
 // Route untuk menampilkan halaman keranjang
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
 
-// Added route for orwders
+// Added route for orders
 Route::get('/orders', [OrderController::class, 'index']);
 
 // Definisikan rute untuk membuat review
@@ -146,15 +128,9 @@ Route::get('/review/create', [ReviewController::class, 'create'])->name('review.
 // Definisikan rute untuk menyimpan review
 Route::post('/review/store', [ReviewController::class, 'store'])->name('review.store');
 
-// Added route for deleting orders
-Route::post('/order/delete/{id}', [OrderController::class, 'delete'])->name('order.delete');
-
-
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/carts', [CartController::class, 'showCart'])->name('cart.show');
-
 Route::get('/cart/show/{userId}', [CartController::class, 'showCart'])->name('cart.show');
-// routes/web.php
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 
 // Rute untuk memperbarui kuantitas produk di keranjang
@@ -169,4 +145,5 @@ Route::post('/order/success', [OrderController::class, 'store'])->name('orders.s
 // Route untuk halaman sukses
 Route::get('/order/success', [OrderController::class, 'success'])->name('orders.success');
 
-
+// Pastikan Anda memiliki route yang sesuai di routes/web.php yang mengarah ke method submitKontak ini:
+Route::post('/submit-kontak', [KontakController::class, 'submitKontak'])->name('submit.kontak');

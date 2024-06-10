@@ -29,6 +29,7 @@
                         <tr>
                             <th>Customer</th>
                             <th>Email</th>
+                            <th>Product Name</th>
                             <th>Subject</th>
                             <th>Rating</th>
                             <th>Review</th>
@@ -37,8 +38,9 @@
                     <tbody id="reviewTableBody">
                         @foreach($reviews as $review)
                         <tr class="review-row">
-                            <td>{{ DB::table('users')->where('id', $review->user_id)->value('name') }}</td>
-                            <td>{{ DB::table('users')->where('id', $review->user_id)->value('email') }}</td>
+                            <td>{{ $review->user ? $review->user->name : 'User tidak ditemukan' }}</td>
+                            <td>{{ $review->user ? $review->user->email : 'Email tidak tersedia' }}</td>
+                            <td>{{ $review->product ? $review->product->nama_product : 'Produk tidak ditemukan' }}</td>
                             <td>{{ $review->subject }}</td>
                             <td>{{ $review->rating }}</td>
                             <td>{{ $review->comment }}</td>

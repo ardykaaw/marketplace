@@ -1,26 +1,28 @@
 .sidebar {
-    background-color: #343a40; 
+    background-color: #343a40; /* Warna sidebar diubah */
     height: 100vh;
     padding: 20px 0;
-    width: 400px; 
+    width: 400px; /* Lebar sidebar diubah dari default menjadi 250px */
+    position: fixed;
     top: 0;
     left: 0;
     overflow-y: auto;
 }
 
 .sidebar a {
-    color: #ffffff; 
+    color: #ffffff; /* Warna teks diubah agar kontras dengan warna sidebar baru */
     text-decoration: none;
     display: block;
     padding: 10px 20px;
     transition: background-color 0.3s ease;
-    font-size: 22px; 
+    font-size: 22px; /* Ukuran huruf diperbesar sedikit */
 }
 
 .sidebar a:hover {
-    background-color: #495057; 
+    background-color: #495057; /* Warna hover diubah agar sesuai dengan warna sidebar baru */
 }
-.content{
-    margin-left: 400px;
+
+.content {
+    margin-left: 400px; /* Margin kiri diubah sesuai dengan lebar sidebar baru */
     padding: 20px;
-} 
+}
