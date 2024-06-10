@@ -1,15 +1,24 @@
+:root {
+    --primary: #232946;
+    --secondary: #eebbc3;
+    --secondary-hover: #f3d3d8;
+    --thirty: #b8c1ec;
+    --thirty-hover: #d5daf4;
+    --bg-main: #121629;
+    --card: #fffffe;
+}
 body {
-    background-color: #fff;
+    background-color: var(--bg-main);
     color: #212529;
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
 .sidebar {
-    background-color: #343a40;
+    background-color: var(--primary);
     height: 100vh;
     padding: 20px 0;
-    width: 400px;
+    width: 350px;
     position: fixed;
     top: 0;
     left: 0;
@@ -70,7 +79,8 @@ body {
     margin-top: 20px;
 }
 
-.table th, .table td {
+.table th,
+.table td {
     border-top: 1px solid #dee2e6;
     padding: 10px;
     text-align: left;

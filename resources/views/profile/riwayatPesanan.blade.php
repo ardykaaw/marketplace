@@ -25,42 +25,51 @@
                         </span>
                     </p>
                     <p> <a href="{{ route('profile.view') }}">Akun saya</a> </p>
-                    <p> <a style="text-decoration: none; color: white" href="{{ route('profile.riwayatPesanan') }}">Riwayat pesanan</a> </p>
-                    <p> <a style="text-decoration: none; color: white" href="{{ route('profile.edit') }}">Edit profile</a> </p>
+                    <p> <a style="text-decoration: none; color: white" href="{{ route('profile.riwayatPesanan') }}">Riwayat
+                            pesanan</a> </p>
+                    <p> <a style="text-decoration: none; color: white" href="{{ route('profile.edit') }}">Edit profile</a>
+                    </p>
                     <p> <a style="text-decoration: none; color: white" href="{{ route('logout') }}">LogOut</a> </p>
                 @endauth
             </div>
             <div class="col-md-8">
-                @auth
-                    @if (Auth::user()->orders()->exists())
-                        <div class="card mt-4">
-                            <div class="card-body">
-                                <h5 class="card-title">Riwayat Pesanan</h5>
-                                <div class="scrollable-table">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Gambar</th>
-                                                <th>Produk</th>
-                                                <th>Jumlah</th>
-                                                <th>Status</th>
-                                                <th>Tanggal</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="orderTableBody">
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Riwayat Pesanan</h5>
+                        <div class="scrollable-table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Gambar</th>
+                                        <th>Produk</th>
+                                        <th>Jumlah</th>
+                                        <th>Status</th>
+                                        <th>Tanggal</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orderTableBody">
+                                    @auth
+                                        @if (Auth::user()->orders()->exists())
                                             @forelse (Auth::user()->orders as $order)
                                                 <tr id="order-row-{{ $order->id }}">
                                                     <td>{{ $order->id }}</td>
-                                                    <td><img src="{{ asset($order->product->image_path) }}" alt="Gambar Produk" style="width: 50px; height: auto;"></td>
+                                                    <td>
+                                                        <img src="{{ asset($order->product->image_path) }}"
+                                                            alt="Gambar Produk" style="width: 50px; height: auto;">
+                                                    </td>
                                                     <td>{{ $order->product->nama_product }}</td>
-                                                    <td>{{ $order->cart_product ? $order->cart_product->quantity : 'No data' }}</td>
+                                                    <td>{{ $order->cart_product ? $order->cart_product->quantity : 'No data' }}
+                                                    </td>
                                                     <td>{{ $order->status }}</td>
                                                     <td>{{ $order->created_at->format('d M Y') }}</td>
                                                     <td>
-                                                        <button class="btn btn-primary" data-toggle="modal" data-target="#reviewModal" onclick="setOrderId({{ $order->id }})">Beri Ulasan</button>
-                                                        <button class="btn btn-danger" onclick="deleteOrder({{ $order->id }})">Hapus</button>
+                                                        <button class="btn btn-primary" data-toggle="modal"
+                                                            data-target="#reviewModal"
+                                                            onclick="setOrderId({{ $order->id }})">Beri Ulasan</button>
+                                                        <button class="btn btn-danger"
+                                                            onclick="deleteOrder({{ $order->id }})">Hapus</button>
                                                     </td>
                                                 </tr>
                                             @empty
@@ -68,19 +77,29 @@
                                                     <td colspan="7">Tidak ada riwayat pesanan.</td>
                                                 </tr>
                                             @endforelse
-                                        </tbody>
-                                    </table>
-                                    @if (Auth::user()->orders->count() > 10)
-                                        <button id="showMoreBtn" class="btn btn-secondary" onclick="showMoreOrders()">Tampilkan Lebih Banyak</button>
-                                        <button id="showLessBtn" class="btn btn-secondary" onclick="showLessOrders()" style="display: none;">Tampilkan Lebih Sedikit</button>
-                                    @endif
-                                </div>
-                            </div>
+                                        @else
+                                            <tr>
+                                                <td colspan="7">Tidak ada riwayat pesanan.</td>
+                                            </tr>
+                                        @endif
+                                    @else
+                                        <tr>
+                                            <td colspan="7">Pengguna tidak ditemukan.</td>
+                                        </tr>
+                                    @endauth
+                                </tbody>
+                            </table>
+                            @auth
+                                @if (Auth::user()->orders->count() > 10)
+                                    <button id="showMoreBtn" class="btn btn-secondary" onclick="showMoreOrders()">Tampilkan
+                                        Lebih Banyak</button>
+                                    <button id="showLessBtn" class="btn btn-secondary" onclick="showLessOrders()"
+                                        style="display: none;">Tampilkan Lebih Sedikit</button>
+                                @endif
+                            @endauth
                         </div>
-                    @endif
-                @else
-                    <p class="card-text">Pengguna tidak ditemukan.</p>
-                @endauth
+                    </div>
+                </div>
             </div>
         </div>
     </div>
