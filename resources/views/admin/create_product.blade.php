@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+a<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin-create.css') }}">
 </head>
 <body>
-<div class="d-flex">
+<div>
     <!-- Sidebar -->
     <div class="sidebar">
         <h2 class="text-center">ADMIN</h2>
@@ -23,8 +23,8 @@
     </div>
     <!-- Main Content -->
     <div class="content">
-        <div class="container mt-5">
-            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="container card-container flex justify-center items-center">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded border">
                 <div class="card-body">
                     <h1 class="card-title">Create Product</h1>
                     <form action="{{ route('admin.store_product') }}" method="POST" enctype="multipart/form-data">

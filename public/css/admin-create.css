@@ -1,5 +1,17 @@
+:root {
+    --primary: #232946;
+    --secondary: #eebbc3;
+    --secondary-hover: #f3d3d8;
+    --thirty: #b8c1ec;
+    --thirty-hover: #d5daf4;
+    --bg-main: #121629;
+    --card: #fffffe;
+}
+body {
+    background-color: var(--bg-main);
+}
 .sidebar {
-    background-color: #343a40; /* Warna sidebar diubah */
+    background-color: var(--primary); /* Warna sidebar diubah */
     height: 100vh;
     padding: 20px 0;
     width: 400px; /* Lebar sidebar diubah dari default menjadi 250px */
@@ -23,7 +35,19 @@
 }
 
 .content {
-    margin-left: 400px; /* Margin kiri diubah sesuai dengan lebar sidebar baru */
-    padding: 20px;
-    overflow: auto;
+    margin-left: 400px; 
+    /* padding: 20px; */
+    /* overflow: auto; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 100%; */
+    height: 96vh;
+}
+.card-container {
+    display: flex;
+    justify-content: center;
+}
+.card {
+    width: 80%;
 }

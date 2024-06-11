@@ -12,6 +12,12 @@
 
 <body>
     <div class="loader" id="loader"></div>
+    {{-- loader --}}
+    {{-- <div class="three-body">
+        <div class="three-body__dot"></div>
+        <div class="three-body__dot"></div>
+        <div class="three-body__dot"></div>
+        </div> --}}
     <div class="content" id="content">
         @include('navbar')
         <div class="banner">

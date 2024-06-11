@@ -134,7 +134,7 @@ body {
 .product-card {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
-    aspec-ratio: 1/1;
+    aspect-ratio: 1/1;
     width: 300px;
 }
 

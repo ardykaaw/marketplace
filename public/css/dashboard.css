@@ -13,8 +13,7 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
-
-.sidebar {
+sidebar {
     background-color: var(--primary);
     height: 100vh;
     padding: 20px 0;
@@ -68,17 +67,16 @@ body {
 .card p {
     color: #f8f9fa;
     margin: 0;
-    padding: 15px;
+    padding: 10px;
     font-size: 1rem;
 }
 
 .table {
     color: #212529;
     width: 100%;
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
     margin-top: 20px;
 }
-
 .table th,
 .table td {
     border-top: 1px solid #dee2e6;
