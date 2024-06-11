@@ -30,11 +30,11 @@
                     $totalUsers = User::count();
                     $products = Product::all();
                     $cards = [
-                        ['color' => '#e63946', 'title' => 'Total Produk', 'text' => 'Jumlah total produk yang tersedia di toko.'],
-                        ['color' => '#000000', 'title' => 'Total Pesanan', 'text' => 'Jumlah total pesanan yang telah diterima.'],
-                        ['color' => '#a8dadc', 'title' => 'Total Ulasan', 'text' => 'Jumlah total ulasan yang diberikan oleh pelanggan.'],
-                        ['color' => '#457b9d', 'title' => 'Pendapatan Bulanan', 'text' => 'Total pendapatan yang diperoleh dalam bulan ini: Rp'],
-                        ['color' => '#1d3557', 'title' => 'Pengguna Terdaftar', 'text' => 'Jumlah total pengguna yang terdaftar di aplikasi: ' . $totalUsers]
+                        ['color' => '#eebbc3', 'title' => 'Total Produk', 'text' => 'Jumlah total produk yang tersedia di toko.'],
+                        ['color' => '#eebbc3', 'title' => 'Total Pesanan', 'text' => 'Jumlah total pesanan yang telah diterima.'],
+                        ['color' => '#eebbc3', 'title' => 'Total Ulasan', 'text' => 'Jumlah total ulasan yang diberikan oleh pelanggan.'],
+                        ['color' => '#eebbc3', 'title' => 'Pendapatan Bulanan', 'text' => 'Total pendapatan yang diperoleh dalam bulan ini: Rp'],
+                        ['color' => '#eebbc3', 'title' => 'Pengguna Terdaftar', 'text' => 'Jumlah total pengguna yang terdaftar di aplikasi: ' . $totalUsers]
                     ];
                 @endphp
 
