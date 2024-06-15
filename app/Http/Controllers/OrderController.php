@@ -17,29 +17,19 @@ class OrderController extends Controller
         }
 
         $validatedData = $request->validate([
-            'products' => 'required|array',
-            'products.*.product_id' => 'required|exists:products,id',
-            'payment_method' => 'required|in:credit_card,bank_transfer',
+            'product_id' => 'required|integer',
+            'quantity' => 'required|integer',
+            'payment_method' => 'required|string'
         ]);
 
-        DB::beginTransaction();
+        // Proses penyimpanan data atau transaksi pembayaran
         try {
-            $user = auth()->user();
-            foreach ($request->products as $prod) {
-                $order = new Order();
-                $order->user_id = $user->id;
-                $order->product_id = $prod['product_id'];
-                $order->quantity = $prod['quantity'];
-                $order->payment_method = $request->payment_method;
-                $order->status = 'pending';
-                $order->save();
-            }
-            DB::commit();
-            return redirect()->route('profile.riwayatPesanan')->with('success', 'Pesanan berhasil dibuat');
+            // Simulasi proses transaksi
+            // Misalnya menyimpan ke database
+            Order::create($validatedData);
+            return response()->json(['success' => 'Order processed successfully']);
         } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error processing payment: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.');
+            return response()->json(['error' => 'Error processing order'], 500);
         }
     }
 

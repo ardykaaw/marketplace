@@ -251,6 +251,7 @@
                 event.preventDefault();
                 var form = $(this);
                 var formData = form.serialize();
+                console.log(formData); // Cek data yang dikirim
                 $.ajax({
                     type: 'POST',
                     url: form.attr('action'),
@@ -259,6 +260,7 @@
                         window.location.href = '{{ route('orders.success') }}'; // Redirect ke halaman sukses
                     },
                     error: function(xhr) {
+                        console.error('Error confirming payment:', xhr.responseText); // Tampilkan error
                         alert('Error confirming payment. Please try again.');
                     }
                 });

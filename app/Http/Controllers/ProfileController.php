@@ -27,8 +27,8 @@ class ProfileController extends Controller
 
     public function riwayatPesanan()
     {
-        $user_id = auth()->id(); // Mendapatkan ID pengguna yang sedang login
-        $orders = Order::where('user_id', $user_id)->with('product')->get(); // Mengambil pesanan yang hanya terkait dengan pengguna tersebut
+        $user_id = auth()->id();
+        $orders = Order::where('user_id', $user_id)->with('product')->get();
 
         return view('profile.riwayatPesanan', compact('orders'));
     }
@@ -47,12 +47,6 @@ class ProfileController extends Controller
         return redirect()->route('profile.view')->with('success', 'Profil berhasil diperbarui.');
     }
 
-    /**
-     * Menampilkan detail produk berdasarkan ID.
-     *
-     * @param  int  $id  ID produk yang ingin ditampilkan
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         try {

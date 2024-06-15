@@ -127,6 +127,7 @@
             </form>
             <div class="mt-3 text-center">
                 <p>You don't have an account? <a href="{{ route('register') }}">Sign Up</a></p>
+                <p><a href="{{ route('password.request') }}">Forgot Your Password?</a></p>
             </div>
         </div>
     </div>
