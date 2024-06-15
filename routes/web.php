@@ -98,6 +98,7 @@ Route::get('/carts', [CartController::class, 'showCart'])->name('cart.show');
 Route::get('/cart/show/{userId}', [CartController::class, 'showCart'])->name('cart.show');
 Route::post('/cart/update', [CartController::class, 'updateCart']);
 Route::post('/cart/remove', [CartController::class, 'removeProductFromCart']);
+Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
 // Route untuk menangani pembelian
 Route::post('/order/success', [OrderController::class, 'store'])->name('orders.success');

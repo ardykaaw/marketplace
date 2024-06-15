@@ -228,22 +228,29 @@
                 $('#payment-guide').html(guide);
             });
 
-            $(document).on('submit', '#addToCartForm', function(event) {
-                event.preventDefault();
-                var form = $(this);
-                var formData = form.serialize();
-                $.ajax({
-                    type: 'POST',
-                    url: form.attr('action'),
-                    data: formData,
-                    success: function(response) {
-                        alert('Produk berhasil ditambahkan ke keranjang');
-                        var cartCount = parseInt($('#cart-count').text()) || 0;
-                        $('#cart-count').text(cartCount + 1);
-                    },
-                    error: function() {
-                        alert('Error adding product to cart');
-                    }
+            $(document).ready(function() {
+                $('#addToCartForm').off('submit').on('submit', function(event) {
+                    event.preventDefault();
+                    var form = $(this);
+                    var formData = form.serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url: form.attr('action'),
+                        data: formData,
+                        beforeSend: function() {
+                            form.find('button[type="submit"]').prop('disabled', true); // Disable button saat AJAX sedang diproses
+                        },
+                        success: function(response) {
+                            alert('Produk berhasil ditambahkan ke keranjang');
+                            var cartCount = parseInt($('#cart-count').text()) || 0;
+                            $('#cart-count').text(cartCount + 1);
+                            form.find('button[type="submit"]').prop('disabled', false); // Enable button kembali
+                        },
+                        error: function() {
+                            alert('Error adding product to cart');
+                            form.find('button[type="submit"]').prop('disabled', false); // Enable button jika terjadi error
+                        }
+                    });
                 });
             });
 

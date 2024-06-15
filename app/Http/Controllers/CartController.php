@@ -6,11 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB; // Tambahkan ini untuk mengatasi undefined type 'App\Http\Controllers\DB'
+use App\Models\Order; // Tambahkan ini untuk mengatasi undefined type 'App\Http\Controllers\Order'
 
 class CartController extends Controller
 {
     public function addToCart(Request $request)
     {
+        Log::info('Add to cart request received', ['user_id' => Auth::id(), 'product_id' => $request->input('product_id')]);
+
         $userId = Auth::id();
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity', 1);
@@ -22,18 +27,12 @@ class CartController extends Controller
 
         $cart = Cart::firstOrCreate(['user_id' => $userId]);
 
-        $cartProduct = $cart->products()->where('product_id', $productId)->first();
-        if ($cartProduct) {
-            $cartProduct->pivot->quantity += $quantity;
-            $cartProduct->pivot->total_price = $cartProduct->pivot->quantity * $cartProduct->pivot->price;
-            $cartProduct->pivot->save();
-        } else {
-            $cart->products()->attach($productId, [
-                'quantity' => $quantity,
-                'price' => $product->harga,
-                'total_price' => $quantity * $product->harga
-            ]);
-        }
+        // Menggunakan syncWithoutDetaching untuk menghindari duplikasi
+        $cart->products()->syncWithoutDetaching([$productId => [
+            'quantity' => $quantity,
+            'price' => $product->harga,
+            'total_price' => $quantity * $product->harga
+        ]]);
 
         return response()->json(['success' => 'Produk berhasil ditambahkan ke keranjang']);
     }
@@ -71,5 +70,37 @@ class CartController extends Controller
         $userId = Auth::id();
         $cart = Cart::where('user_id', $userId)->with('products')->first();
         return view('cart', compact('cart'));
+    }
+
+    public function checkout(Request $request)
+    {
+        $userId = Auth::id();
+        $cart = Cart::where('user_id', $userId)->with('products')->first();
+
+        if (!$cart) {
+            return redirect()->back()->with('error', 'Keranjang Anda kosong.');
+        }
+
+        DB::beginTransaction();
+        try {
+            foreach ($cart->products as $product) {
+                Order::create([
+                    'user_id' => $userId,
+                    'product_id' => $product->id,
+                    'quantity' => $product->pivot->quantity,
+                    'status' => 'pending',
+                    'payment_method' => $request->payment_method
+                ]);
+            }
+
+            // Kosongkan keranjang setelah checkout
+            $cart->products()->detach();
+
+            DB::commit();
+            return redirect()->route('profile.riwayatPesanan')->with('success', 'Checkout berhasil!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat checkout.');
+        }
     }
 }

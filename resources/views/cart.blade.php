@@ -15,7 +15,7 @@
     <div class="container cart-container">
         <div class="cart-items">
             <h1>Keranjang Belanja</h1>
-            @if($cart && $cart->products->count() > 0)
+            @if(isset($cart) && $cart->products->count() > 0)
                 <table class="table">
                     <thead>
                         <tr>
@@ -50,6 +50,7 @@
                 <p>Keranjang belanja Anda kosong.</p>
             @endif
         </div>
+        @if(isset($cart))
         <div class="cart-summary">
             <h4>Summary</h4>
             <p>Jumlah Item: <span id="item-count">{{ $cart->products->sum('pivot.quantity') }}</span></p>
@@ -57,11 +58,14 @@
             <p class="total">Total: Rp<span id="total">{{ number_format($cart->products->sum(function($product) { return ($product->harga ?? 0) * $product->pivot->quantity; })) }}</span></p>
             <button class="btn btn-primary btn-block checkout-button" onclick="checkout()">Checkout</button>
         </div>
+        @endif
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+        let alertShown = false;
+
         function updateQuantity(productId, change, price) {
             console.log("Fungsi updateQuantity dipanggil dengan productId:", productId);
             let newQuantity = parseInt(document.getElementById('quantity-' + productId).innerText) + change;
@@ -114,23 +118,14 @@
         }
 
         function checkout() {
-            let products = [];
-            document.querySelectorAll('.cart-item').forEach(item => {
-                let productId = item.getAttribute('data-product-id');
-                let quantity = parseInt(document.getElementById('quantity-' + productId).innerText);
-                products.push({product_id: productId, quantity: quantity});
-            });
-
             $.ajax({
-                url: '/orders',
+                url: '{{ route('cart.checkout') }}',
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    products: products,
                     payment_method: 'credit_card' // Contoh metode pembayaran
                 },
                 success: function(response) {
-                    alert('Checkout berhasil!');
                     window.location.href = '{{ route("profile.riwayatPesanan") }}';
                 },
                 error: function(xhr) {
@@ -138,6 +133,29 @@
                 }
             });
         }
+
+        $(document).ready(function() {
+            $('#add-to-cart-button').off('click').on('click', function() { // Gunakan .off() untuk menghapus handler sebelumnya
+                $(this).prop('disabled', true); // Nonaktifkan tombol saat permintaan sedang diproses
+
+                $.ajax({
+                    url: '/cart/add',
+                    type: 'POST',
+                    data: {
+                        product_id: $(this).data('product-id'),
+                        quantity: 1 // Misalkan selalu 1 untuk simplifikasi
+                    },
+                    success: function(response) {
+                        alert(response.success);
+                        $('#add-to-cart-button').prop('disabled', false); // Aktifkan kembali tombol setelah permintaan selesai
+                    },
+                    error: function() {
+                        alert('Error adding product to cart');
+                        $('#add-to-cart-button').prop('disabled', false); // Aktifkan kembali tombol jika terjadi error
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>

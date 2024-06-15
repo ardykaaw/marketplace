@@ -27,8 +27,8 @@ class ProfileController extends Controller
 
     public function riwayatPesanan()
     {
-        $user_id = auth()->id();
-        $orders = Order::where('user_id', $user_id)->with('product')->get();
+        $userId = Auth::id();
+        $orders = Order::where('user_id', $userId)->with('product')->get();
 
         return view('profile.riwayatPesanan', compact('orders'));
     }
