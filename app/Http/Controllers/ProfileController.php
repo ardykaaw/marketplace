@@ -8,33 +8,31 @@ use App\Models\Product;
 use App\Models\Order; 
 use Illuminate\Support\Facades\Auth;
 
-
 class ProfileController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
-        return view('profile.index', compact('user'));
+        return view('profile.index', ['user' => auth()->user()]);
     }
 
     public function view()
     {
-        $user = auth()->user();
-        return view('profile.view', compact('user'));
+        return view('profile.view', ['user' => auth()->user()]);
     }
 
     public function edit()
     {
-        $user = auth()->user();
-        return view('profile.edit', compact('user'));
+        return view('profile.edit', ['user' => auth()->user()]);
     }
 
     public function riwayatPesanan()
     {
-        $user = auth()->user();
-        return view('profile.riwayatPesanan', compact('user'));
+        $user_id = auth()->id(); // Mendapatkan ID pengguna yang sedang login
+        $orders = Order::where('user_id', $user_id)->with('product')->get(); // Mengambil pesanan yang hanya terkait dengan pengguna tersebut
+
+        return view('profile.riwayatPesanan', compact('orders'));
     }
-    
+
     public function update(Request $request)
     {
         $request->validate([
@@ -44,10 +42,7 @@ class ProfileController extends Controller
         ]);
 
         $user = Auth::user();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->address = $request->address;
-        $user->save(); // Ganti save() dengan update()
+        $user->update($request->only(['name', 'email', 'address']));
 
         return redirect()->route('profile.view')->with('success', 'Profil berhasil diperbarui.');
     }
@@ -62,7 +57,7 @@ class ProfileController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
-            return view('products.show', compact('product'));
+            return view('products.show', ['product' => $product]);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return redirect()->route('products.index')->with('error', 'Produk tidak ditemukan.');
         }

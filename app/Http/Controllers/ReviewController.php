@@ -17,23 +17,21 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'order_id' => 'required|exists:orders,id',
-            'product_id' => 'required|exists:products,id', // Tambahkan validasi untuk product_id
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'required|string|max:255',
+            'subject' => 'required|string|max:255'
         ]);
-
-        $product = Product::find($validatedData['product_id']); // Ambil data produk berdasarkan product_id
 
         Review::create([
-            'user_id' => Auth::id(), // Menambahkan user_id dari pengguna yang sedang login
-            'order_id' => $validatedData['order_id'],
-            'product_id' => $validatedData['product_id'], // Simpan product_id
-            'rating' => $validatedData['rating'],
-            'comment' => $validatedData['comment'],
+            'user_id' => auth()->id(),
+            'product_id' => $request->product_id,
+            'rating' => $request->rating,
+            'comment' => $request->comment,
+            'subject' => $request->subject
         ]);
 
-        return redirect()->back()->with('success', 'Ulasan untuk produk ' . $product->nama_product . ' berhasil disimpan.');
+        return redirect()->back()->with('success', 'Ulasan berhasil ditambahkan.');
     }
 }

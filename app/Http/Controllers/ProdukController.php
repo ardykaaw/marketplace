@@ -85,7 +85,7 @@ class ProdukController extends Controller
         return redirect()->route('admin.edit_product', $id)->with('success', 'Produk berhasil diperbarui.');
     }
 
-    public function deleteProduct($id)
+    public function destroy($id)
     {
         $product = Product::find($id);
         if ($product) {
@@ -102,4 +102,3 @@ class ProdukController extends Controller
         return view('admin.manage_products', compact('products'));
     }
 }
-

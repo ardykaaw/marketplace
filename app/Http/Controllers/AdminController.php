@@ -34,9 +34,17 @@ class AdminController extends Controller
             'name' => 'required',
             'price' => 'required|numeric',
             'description' => 'required',
+            'image' => 'required|image' // Pastikan gambar diupload
         ]);
 
-        Product::create($request->all());
+        $productData = $request->all();
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('public/images');
+            $productData['image_path'] = $path;
+        }
+
+        Product::create($productData);
 
         return redirect()->route('admin.dashboard')->with('success', 'Product created successfully.');
     }
@@ -69,11 +77,14 @@ class AdminController extends Controller
         return redirect()->route('admin.edit_product', $product->id)->with('success', 'Produk berhasil diperbarui.');
     }
 
-    public function deleteProduct(Product $product)
+    public function deleteProduct(Request $request, Product $product)
     {
-        $product->delete();
+        if ($request->isMethod('post')) {
+            $product->delete();
+            return redirect()->route('admin.dashboard')->with('success', 'Product deleted successfully.');
+        }
 
-        return redirect()->route('admin.dashboard')->with('success', 'Product deleted successfully.');
+        return redirect()->route('admin.dashboard')->with('error', 'Method not allowed.');
     }
 
     public function orders()
@@ -88,7 +99,7 @@ class AdminController extends Controller
 
     public function reviews()
     {
-        $reviews = Review::with('user')->get(); // Gunakan eager loading
+        $reviews = Review::with(['user', 'product'])->get();
         return view('admin.reviews', compact('reviews'));
     }
     public function orderDetails(Order $order)

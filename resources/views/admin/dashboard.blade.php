@@ -21,6 +21,7 @@
                 <a class="nav-link" href="{{ route('admin.create_product') }}">Add Product</a>
                 <a class="nav-link" href="{{ route('admin.orders') }}">Orders</a>
                 <a class="nav-link" href="{{ route('admin.reviews') }}">Reviews</a>
+                <a class="nav-link" href="{{ route('admin.manage_products') }}">Produk</a>
             </nav>
         </div>
         <!-- Main Content -->
@@ -71,47 +72,7 @@
                     </div>
                 @endforeach
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Harga</th>
-                        <th scope="col">Deskripsi</th>
-                        <th scope="col">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                    @foreach ($products as $product)
-                        <tr>
-                            <td>{{ $product->nama_product }}</td>
-                            <td>Rp{{ number_format($product->harga, 2, ',', '.') }}</td>
-                            <td>@php
-                                $specification = explode("\n", $product->spesifikasi);
-                            @endphp
-
-                            @foreach ($specification as $spec)
-                                {{ $spec }}<br>
-                            @endforeach</td>
-                            <td>
-                                <a href="{{ route('admin.edit_product', $product->id) }}"
-                                    class="btn btn-primary btn-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a2.121 2.121 0 1 1 3 3L12 15l-4 1l1-4Z"/></g></svg>
-                                </a>
-                                <!-- Tombol Hapus -->
-                                <form action="{{ route('admin.delete_product', $product->id) }}" method="POST"
-                                    style="display: inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z"/></svg>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            
         </div>
     </div>
     <!-- Bootstrap JS -->

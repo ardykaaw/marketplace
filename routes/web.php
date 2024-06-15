@@ -5,14 +5,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Auth\LoginController; // Pastikan Anda memiliki controller ini
+use App\Http\Controllers\Auth\LoginController; 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminRegisterController; 
-use App\Http\Controllers\AboutController;// Added this line to include the DashboardController
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CartController; // Added this line to include the CartController
 use App\Http\Controllers\ReviewController; // Ads line to include the ReviewController
 
@@ -96,13 +96,13 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::put('/admin/products/update', [AdminController::class, 'update'])->name('admin.update_product');
     Route::get('/admin/products/{product}/edit', [AdminController::class, 'editProduct'])->name('admin.edit_product');
     Route::put('/admin/products/{product}', [AdminController::class, 'updateProduct'])->name('admin.update_product');
-    Route::delete('/admin/products/{product}', [AdminController::class, 'deleteProduct'])->name('admin.delete_product');
+    Route::delete('/admin/products/{product}/delete', [ProdukController::class, 'destroy'])->name('admin.delete_product');
     Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
     Route::get('/admin/reviews', [AdminController::class, 'reviews'])->name('admin.reviews');
     Route::get('/admin/dashboard/stats', [DashboardController::class, 'stats'])->name('admin.stats'); // Added this line to include the stats route
     Route::get('/admin/orders/{order}', [AdminController::class, 'orderDetails'])->name('admin.order_details');
     Route::get('/admin/products/{id}/edit', [ProdukController::class, 'edit'])->name('admin.edit_product');
-    Route::post('/admin/products/{id}/delete', [ProdukController::class, 'destroy'])->name('admin.delete_product');
+    Route::delete('/admin/products/{id}/delete', [ProdukController::class, 'destroy'])->name('admin.delete_product');
     Route::get('/admin/manage-products', [ProdukController::class, 'manage'])->name('admin.manage_products');
     Route::get('/admin/orders/{order}/edit', [AdminController::class, 'editOrder'])->name('admin.orders_edit');
     Route::post('/admin/orders/{order}/confirm', [AdminController::class, 'confirmOrder'])->name('admin.confirmOrder');
@@ -114,7 +114,7 @@ Route::get('/sukses', function () {
 });
 
 // Added route for deleting orders
-Route::post('/order/delete/{id}', [OrderController::class, 'delete'])->name('order.delete');
+Route::delete('/order/delete/{id}', [OrderController::class, 'destroy'])->name('order.delete');
 
 // Route untuk menampilkan halaman keranjang
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
@@ -126,7 +126,7 @@ Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/review/create', [ReviewController::class, 'create'])->name('review.create');
 
 // Definisikan rute untuk menyimpan review
-Route::post('/review/store', [ReviewController::class, 'store'])->name('review.store');
+Route::post('/reviews/store', [ReviewController::class, 'store'])->name('review.store');
 
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/carts', [CartController::class, 'showCart'])->name('cart.show');

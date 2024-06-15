@@ -6,37 +6,38 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
     public function store(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Anda harus login untuk membuat pesanan.');
+        }
+
+        $validatedData = $request->validate([
+            'products' => 'required|array',
+            'products.*.product_id' => 'required|exists:products,id',
+            'payment_method' => 'required|in:credit_card,bank_transfer',
+        ]);
+
+        DB::beginTransaction();
         try {
-            // Pastikan pengguna terautentikasi
-            if (!auth()->check()) {
-                return redirect()->route('login')->with('error', 'Anda harus login untuk membuat pesanan.');
-            }
-
-            // Validasi data pesanan
-            $validatedData = $request->validate([
-                'product_id' => 'required|exists:products,id',
-                'payment_method' => 'required|in:credit_card,bank_transfer',
-            ]);
-
-            // Simpan pesanan ke database
             $user = auth()->user();
             foreach ($request->products as $prod) {
                 $order = new Order();
                 $order->user_id = $user->id;
                 $order->product_id = $prod['product_id'];
                 $order->quantity = $prod['quantity'];
+                $order->payment_method = $request->payment_method;
                 $order->status = 'pending';
                 $order->save();
             }
-
-            // Redirect dengan pesan sukses
-            return redirect()->route('orders.success')->with('success', 'Pembayaran berhasil dikonfirmasi');
+            DB::commit();
+            return redirect()->route('profile.riwayatPesanan')->with('success', 'Pesanan berhasil dibuat');
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::error('Error processing payment: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.');
         }
@@ -74,17 +75,15 @@ class OrderController extends Controller
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        Log::info("Attempting to delete order with ID: $id");
-        $order = Order::find($id);
-        if ($order) {
+        try {
+            $order = Order::findOrFail($id);
             $order->delete();
-            Log::info("Order deleted successfully.");
             return response()->json(['success' => 'Pesanan berhasil dihapus']);
-        } else {
-            Log::error("Order not found.");
-            return response()->json(['error' => 'Pesanan tidak ditemukan'], 404);
+        } catch (\Exception $e) {
+            Log::error('Error deleting order: ' . $e->getMessage());
+            return response()->json(['error' => 'Gagal menghapus pesanan'], 500);
         }
     }
 }

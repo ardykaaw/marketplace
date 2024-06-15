@@ -12,7 +12,6 @@
 </head>
 
 <body style="background-color: #1a1a2e; color: #fff; font-family: 'Inter', sans-serif;">
-    <div class="loader" id="loader"></div>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Audio</a>
@@ -136,21 +135,6 @@
         </div>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const loader = document.getElementById('loader');
-            const content = document.getElementById('content');
-
-            // Menampilkan loader
-            loader.style.display = 'block';
-            content.style.display = 'none';
-
-            window.onload = function() {
-                // Menyembunyikan loader dan menampilkan konten setelah halaman dimuat
-                loader.style.display = 'none';
-                content.style.display = 'block';
-            };
-        });
-
         document.getElementById('productFilter').addEventListener('change', function() {
             var selectedType = this.value;
             window.location.href = `?type=${selectedType}`;

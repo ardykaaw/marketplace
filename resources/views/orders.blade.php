@@ -213,22 +213,22 @@
 
                 if (selectedMethod === 'BCA') {
                     guide =
-                        '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BCA</h5><p>Transfer ke rekening BCA 1234567890 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' +
-                        totalHarga + '</p></div></div>';
+                        '<div class="card bg-light mb-3"><div class="card-header text-center"><h5 class="card-title">Panduan Pembayaran BCA</h5></div><div class="card-body"><p>Transfer ke rekening BCA 1234567890 a/n AUDIO.</p><p>Total yang harus dibayar: <strong>Rp ' +
+                        totalHarga + '</strong></p></div></div>';
                 } else if (selectedMethod === 'BRI') {
                     guide =
-                        '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BRI</h5><p>Transfer ke rekening BRI 9876543210 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' +
-                        totalHarga + '</p></div></div>';
+                        '<div class="card bg-light mb-3"><div class="card-header text-center"><h5 class="card-title">Panduan Pembayaran BRI</h5></div><div class="card-body"><p>Transfer ke rekening BRI 9876543210 a/n AUDIO.</p><p>Total yang harus dibayar: <strong>Rp ' +
+                        totalHarga + '</strong></p></div></div>';
                 } else if (selectedMethod === 'BNI') {
                     guide =
-                        '<div class="card"><div class="card-body"><h5 class="card-title">Panduan Pembayaran BNI</h5><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: Rp ' +
-                        totalHarga + '</p></div></div>';
+                        '<div class="card bg-light mb-3"><div class="card-header text-center"><h5 class="card-title">Panduan Pembayaran BNI</h5></div><div class="card-body"><p>Transfer ke rekening BNI 98477767454 a/n AUDIO.</p><p>Total yang harus dibayar: <strong>Rp ' +
+                        totalHarga + '</strong></p></div></div>';
                 }
 
                 $('#payment-guide').html(guide);
             });
 
-            $('#addToCartForm').submit(function(event) {
+            $(document).on('submit', '#addToCartForm', function(event) {
                 event.preventDefault();
                 var form = $(this);
                 var formData = form.serialize();

@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -224,8 +225,8 @@
                     this.x = x;
                     this.y = y;
                     this.size = Math.random() * 5 + 1;
-                    this.speedX = Math.random() * 3 - 1.5;
-                    this.speedY = Math.random() * 3 - 1.5;
+                    this.speedX = Math.random() * 5 - 2.5; // Increase speed range for more dispersion
+                    this.speedY = Math.random() * 5 - 2.5; // Increase speed range for more dispersion
                     this.color = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.8)`;
                 }
 
@@ -255,7 +256,7 @@
             };
 
             window.addEventListener('mousemove', function(e) {
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 10; i++) { // Increase the number of particles generated
                     particlesArray.push(new Particle(e.pageX, e.pageY));
                 }
             });

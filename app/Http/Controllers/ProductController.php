@@ -15,8 +15,10 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        Product::find($id)->delete();
-        return redirect()->route('admin.dashboard')->with('success', 'Product deleted successfully');
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Produk berhasil dihapus.');
     }
 
     public function update(Request $request)
@@ -43,4 +45,3 @@ class ProductController extends Controller
         return view('admin.dashboard', compact('products'));
     }
 }
-

@@ -1,4 +1,4 @@
-a<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,7 +27,7 @@ a<!DOCTYPE html>
             <div class="card shadow-lg p-3 mb-5 bg-white rounded border">
                 <div class="card-body">
                     <h1 class="card-title">Create Product</h1>
-                    <form action="{{ route('admin.store_product') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.store_product') }}" method="POST" enctype="multipart/form-data" onsubmit="return showAlert()">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Product Name</label>
@@ -53,5 +53,23 @@ a<!DOCTYPE html>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function showAlert() {
+        const alertCard = document.createElement('div');
+        alertCard.className = 'card alert-card';
+        alertCard.innerHTML = `
+            <div class="card-body">
+                <div class="alert alert-success" role="alert">
+                    Produk berhasil ditambahkan!
+                </div>
+            </div>
+        `;
+        document.body.appendChild(alertCard);
+        setTimeout(() => {
+            alertCard.remove();
+        }, 3000);
+        return true;
+    }
+</script>
 </body>
 </html>
