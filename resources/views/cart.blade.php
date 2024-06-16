@@ -56,7 +56,7 @@
             <p>Jumlah Item: <span id="item-count">{{ $cart->products->sum('pivot.quantity') }}</span></p>
             <p>Subtotal: Rp<span id="subtotal">{{ number_format($cart->products->sum(function($product) { return ($product->harga ?? 0) * $product->pivot->quantity; })) }}</span></p>
             <p class="total">Total: Rp<span id="total">{{ number_format($cart->products->sum(function($product) { return ($product->harga ?? 0) * $product->pivot->quantity; })) }}</span></p>
-            <button class="btn btn-primary btn-block checkout-button" onclick="checkout()">Checkout</button>
+            <button class="btn btn-primary btn-block checkout-button" onclick="checkout({{ $product->id }}, {{ $product->pivot->quantity }})">Checkout</button>
         </div>
         @endif
     </div>
@@ -73,6 +73,9 @@
                 </div>
                 <div class="modal-body">
                     <form id="paymentForm">
+                        @csrf
+                        <input type="hidden" name="product_id" id="product_id">
+                        <input type="hidden" name="quantity" id="quantity">
                         <div class="form-group">
                             <label for="payment_method">Metode Pembayaran:</label>
                             <select class="form-control" id="payment_method" name="payment_method">
@@ -145,8 +148,10 @@
             document.getElementById('total').innerText = subtotal.toLocaleString();
         }
 
-        function checkout() {
-            $('#paymentModal').modal('show'); // Menampilkan modal pembayaran
+        function checkout(productId, quantity) {
+            $('#product_id').val(productId);
+            $('#quantity').val(quantity);
+            $('#paymentModal').modal('show');
         }
 
         $(document).ready(function() {
@@ -174,6 +179,13 @@
             $('#paymentForm').submit(function(event) {
                 event.preventDefault();
                 let paymentMethod = $('#payment_method').val();
+                let productId = $('#product_id').val();
+                let quantity = $('#quantity').val();
+
+                if (!productId || !quantity) {
+                    alert('Product ID dan Quantity harus diisi.');
+                    return;
+                }
 
                 $.ajax({
                     url: '{{ route('orders.store') }}',
@@ -181,7 +193,8 @@
                     data: {
                         _token: '{{ csrf_token() }}',
                         payment_method: paymentMethod,
-                        // Tambahkan data lain yang diperlukan seperti product_id, user_id, dll.
+                        product_id: productId,
+                        quantity: quantity
                     },
                     success: function(response) {
                         $('#paymentModal').modal('hide');

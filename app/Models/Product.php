@@ -15,6 +15,7 @@ class Product extends Model
         'spesifikasi',
         'image_path',
         'new_column',
+        'category',
     ];
 
     use HasFactory;

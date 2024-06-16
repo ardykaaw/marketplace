@@ -25,7 +25,6 @@
             display: flex;
             justify-content: center;
             overflow-x: hidden;
-            /* align-items: center; */
         }
 
         .image-product-detail {
@@ -111,33 +110,6 @@
                                 @endforeach
                             </p>
                             <p class="card-text lead">Harga: {{ $product->harga }}</p>
-                            <div class="d-flex align-items-center">
-                                <button type="button" class="btn btn-secondary btn-sm"
-                                    onclick="decreaseQuantity()">-</button>
-                                <input type="number" id="quantity" value="1" class="form-control mx-2"
-                                    style="width: 50px;" min="1">
-                                <button type="button" class="btn btn-secondary btn-sm"
-                                    onclick="increaseQuantity()">+</button>
-                            </div>
-                            <script>
-                                function decreaseQuantity() {
-                                    var quantityInput = document.getElementById('quantity');
-                                    var currentValue = parseInt(quantityInput.value);
-                                    if (currentValue > 1) {
-                                        quantityInput.value = currentValue - 1;
-                                    }
-                                    document.getElementById('orderQuantity').value = quantityInput.value;
-                                    document.getElementById('cartQuantity').value = quantityInput.value;
-                                }
-
-                                function increaseQuantity() {
-                                    var quantityInput = document.getElementById('quantity');
-                                    var currentValue = parseInt(quantityInput.value);
-                                    quantityInput.value = currentValue + 1;
-                                    document.getElementById('orderQuantity').value = quantityInput.value;
-                                    document.getElementById('cartQuantity').value = quantityInput.value;
-                                }
-                            </script>
                             <div class="buttonExpression">
                                 <div class="buttonBuyNow">
                                     <button type="button" class="btn mt-3" data-toggle="modal" data-target="#paymentModal">Beli Sekarang</button>
@@ -146,7 +118,7 @@
                                     <form action="{{ route('cart.add') }}" method="POST" id="addToCartForm">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <input type="hidden" name="quantity" id="cartQuantity" value="1">
+                                        <input type="hidden" name="quantity" value="1">
                                         <button type="submit" class="btn mt-3">Masukkan Keranjang</button>
                                     </form>
                                 </div>
@@ -170,8 +142,8 @@
                     <div class="modal-body">
                         <form action="{{ route('orders.store') }}" method="POST" id="paymentForm">
                             @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="hidden" name="quantity" id="orderQuantity" value="1">
+                            <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="quantity" value="1">
                             <div class="form-group">
                                 <label for="payment_method">Metode Pembayaran</label>
                                 <select class="form-control" id="payment_method" name="payment_method" required>
@@ -180,6 +152,7 @@
                                     <option value="BNI">BNI</option>
                                 </select>
                             </div>
+                            <div id="payment-guide"></div>
                             <button type="submit" class="btn btn-primary mt-3">Konfirmasi Pembayaran</button>
                         </form>
                     </div>
@@ -198,14 +171,12 @@
                 var productId = button.data('product-id');
                 var modal = $(this);
                 modal.find('.modal-body input[name="product_id"]').val(productId);
-                modal.find('.modal-body input[name="quantity"]').val($('#quantity').val());
             });
 
             $('#payment_method').change(function() {
                 var selectedMethod = $(this).val();
-                var quantity = parseInt($('#quantity').val(), 10);
                 var harga = {{ $product->harga }};
-                var totalHarga = quantity * harga;
+                var totalHarga = harga;
                 var guide = '';
 
                 if (selectedMethod === 'BCA') {
@@ -225,43 +196,42 @@
                 $('#payment-guide').html(guide);
             });
 
-            $(document).ready(function() {
-                $('#addToCartForm').off('submit').on('submit', function(event) {
-                    event.preventDefault();
-                    var form = $(this);
-                    var formData = form.serialize();
-                    $.ajax({
-                        type: 'POST',
-                        url: form.attr('action'),
-                        data: formData,
-                        beforeSend: function() {
-                            form.find('button[type="submit"]').prop('disabled', true); // Disable button saat AJAX sedang diproses
-                        },
-                        success: function(response) {
-                            alert('Produk berhasil ditambahkan ke keranjang');
-                            var cartCount = parseInt($('#cart-count').text()) || 0;
-                            $('#cart-count').text(cartCount + 1);
-                            form.find('button[type="submit"]').prop('disabled', false); // Enable button kembali
-                        },
-                        error: function() {
-                            alert('Error adding product to cart');
-                            form.find('button[type="submit"]').prop('disabled', false); // Enable button jika terjadi error
-                        }
-                    });
+            $('#addToCartForm').submit(function(event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = {
+                    product_id: $('input[name="product_id"]').val(),
+                    quantity: 1,
+                    _token: $('input[name="_token"]').val()
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: form.attr('action'),
+                    data: formData,
+                    success: function(response) {
+                        alert('Produk berhasil ditambahkan ke keranjang');
+                        var cartCount = parseInt($('#cart-count').text()) || 0;
+                        $('#cart-count').text(cartCount + 1);
+                    }
                 });
             });
 
             $('#paymentForm').submit(function(event) {
                 event.preventDefault();
                 var form = $(this);
-                var formData = form.serialize();
+                var formData = {
+                    product_id: $('input[name="product_id"]').val(),
+                    quantity: 1,
+                    payment_method: $('#payment_method').val(),
+                    _token: $('input[name="_token"]').val()
+                };
                 $.ajax({
                     type: 'POST',
                     url: form.attr('action'),
                     data: formData,
                     success: function(response) {
                         if (response.success) {
-                            window.location.href = '{{ route('orders.success') }}';
+                            window.location.href = response.redirect; // Redirect jika sukses
                         } else {
                             alert(response.error);
                         }
@@ -273,41 +243,6 @@
                 });
             });
         });
-
-        function increaseQuantity() {
-            var value = parseInt(document.getElementById('quantity').value, 10);
-            value = isNaN(value) ? 0 : value;
-            value++;
-            document.getElementById('quantity').value = value;
-            document.getElementById('orderQuantity').value = value;
-            document.getElementById('cartQuantity').value = value;
-        }
-
-        function decreaseQuantity() {
-            var value = parseInt(document.getElementById('quantity').value, 10);
-            value = isNaN(value) ? 0 : value;
-            value < 2 ? value = 1 : value--;
-            document.getElementById('quantity').value = value;
-            document.getElementById('orderQuantity').value = value;
-            document.getElementById('cartQuantity').value = value;
-        }
-
-        function addToCart(productId) {
-            $.ajax({
-                url: '/cart/add',
-                type: 'POST',
-                data: {
-                    product_id: productId,
-                    quantity: 1 // atau nilai lain berdasarkan input pengguna
-                },
-                success: function(response) {
-                    alert(response.success);
-                },
-                error: function() {
-                    alert('Error adding product to cart');
-                }
-            });
-        }
     </script>
 
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -327,13 +262,17 @@
             $('form').submit(function(event) {
                 event.preventDefault();
                 var form = $(this);
-                var formData = form.serialize();
+                var formData = {
+                    product_id: $('input[name="product_id"]').val(),
+                    quantity: 1,
+                    payment_method: $('#payment_method').val(),
+                    _token: $('input[name="_token"]').val()
+                };
                 $.ajax({
                     type: 'POST',
                     url: form.attr('action'),
                     data: formData,
                     success: function(response) {
-                        alert('Produk berhasil ditambahkan ke keranjang');
                         var cartCount = parseInt($('#cart-count').text()) || 0;
                         $('#cart-count').text(cartCount + 1);
                     }

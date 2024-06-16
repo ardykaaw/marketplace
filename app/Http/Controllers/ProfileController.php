@@ -7,12 +7,19 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Order; 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        return view('profile.index', ['user' => auth()->user()]);
+        try {
+            $orders = Order::all();
+            return view('orders.index', compact('orders'));
+        } catch (\Exception $e) {
+            Log::error('Error displaying orders: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menampilkan pesanan.');
+        }
     }
 
     public function view()
@@ -32,8 +39,8 @@ class ProfileController extends Controller
 
         // Pastikan setiap order memiliki data gambar dan nama produk
         foreach ($orders as $order) {
-            $order->product_image = $order->product->image_path ?? 'default_image.jpg';
-            $order->product_name = $order->product->name_product ?? 'Nama Produk Tidak Tersedia';
+            $order->gambar = $order->product->image_path ?? 'default_image.jpg';
+            $order->name = $order->product->name_product ?? 'Nama Produk Tidak Tersedia';
         }
 
         return view('profile.riwayatPesanan', compact('orders'));

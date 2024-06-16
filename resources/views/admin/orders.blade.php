@@ -35,7 +35,6 @@
                         <th>Kategori</th>
                         <th>Informasi Produk</th>
                         <th>Jumlah Pesanan</th>
-                        <th>Total Harga</th>
                         <th>Alamat</th>
                         <th>Metode Pembayaran</th>
                         <th>Tanggal</th>
@@ -55,7 +54,6 @@
                             <p>Harga: Rp{{ number_format($order->product->harga ?? 0, 2) }}</p>
                         </td>
                         <td>{{ $order->quantity }}</td>
-                        <td>Rp{{ number_format($order->total, 2) }}</td>
                         <td>{{ $order->user->address }}</td>
                         <td>{{ $order->payment_method }}</td>
                         <td>{{ $order->created_at->format('d-m-Y H:i:s') }}</td>

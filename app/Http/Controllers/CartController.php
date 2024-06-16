@@ -7,8 +7,8 @@ use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB; // Tambahkan ini untuk mengatasi undefined type 'App\Http\Controllers\DB'
-use App\Models\Order; // Tambahkan ini untuk mengatasi undefined type 'App\Http\Controllers\Order'
+use Illuminate\Support\Facades\DB; 
+use App\Models\Order; 
 
 class CartController extends Controller
 {

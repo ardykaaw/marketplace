@@ -44,8 +44,9 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Gambar</th>
                                         <th>Produk</th>
+                                        <th>Gambar</th>
+                                        <th>Harga</th>
                                         <th>Jumlah</th>
                                         <th>Status</th>
                                         <th>Tanggal</th>
@@ -56,7 +57,7 @@
                                 <tbody id="orderTableBody">
                                     @if($orders->isEmpty())
                                         <tr>
-                                            <td colspan="8" class="text-center">Tidak ada pesanan yang ditemukan.</td>
+                                            <td colspan="9" class="text-center">Tidak ada pesanan yang ditemukan.</td>
                                         </tr>
                                     @else
                                         @php
@@ -65,15 +66,13 @@
                                         @foreach ($orders as $index => $order)
                                             <tr id="order-row-{{ $order->id }}">
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>
-                                                    @if($order->product && $order->product->image_path)
-                                                        <img src="{{ asset('storage/' . $order->product->image_path) }}" alt="Gambar Produk" style="width: 50px; height: 50px;">
-                                                    @else
-                                                        Gambar tidak tersedia
-                                                    @endif
-                                                </td>
                                                 <td>{{ $order->product ? $order->product->nama_product : 'Produk tidak ditemukan' }}</td>
+                                                <td>
+                                                    <img src="{{ asset($order->gambar) }}" alt="Gambar Produk" style="width: 50px; height: 50px;">
+                                                </td>
+                                                <td>{{ $order->product ? 'Rp ' . number_format($order->product->harga, 0, ',', '.') : 'Harga tidak tersedia' }}</td>
                                                 <td>{{ $order->quantity }}</td>
+                                               
                                                 <td>{{ $order->status }}</td>
                                                 <td>{{ $order->created_at->format('d M Y') }}</td>
                                                 <td>{{ $order->payment_method }}</td>

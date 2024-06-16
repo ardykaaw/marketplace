@@ -12,25 +12,49 @@ class OrderController extends Controller
 {
     public function store(Request $request)
     {
-        Log::info('Received data:', $request->all());
-        if (!auth()->check()) {
-            return response()->json(['error' => 'Anda harus login untuk membuat pesanan.'], 401);
-        }
-
-        $validatedData = $request->validate([
-            'payment_method' => 'required|string',
-            // Validasi data lainnya
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'payment_method' => 'required|in:BCA,BRI,BNI',
+            'quantity' => 'required|integer|min:1'
         ]);
 
-        $order = new Order();
-        $order->user_id = auth()->id();
-        $order->payment_method = $validatedData['payment_method'];
-        $order->status = 'pending';
-        // Set properties lainnya
-        $order->save();
+        // Mulai transaksi
+        DB::beginTransaction();
 
-        return response()->json(['success' => 'Order processed successfully']);
+        try {
+            $product = Product::lockForUpdate()->find($validated['product_id']);
+
+            if (!$product) {
+                return response()->json(['success' => false, 'error' => 'Produk tidak ditemukan.']);
+            }
+
+    
+            // Simpan order
+            $order = new Order();
+            $order->fill([
+                'user_id' => auth()->id(),
+                'product_id' => $validated['product_id'],
+                'payment_method' => $validated['payment_method'],
+                'quantity' => $validated['quantity'],
+                'status' => 'pending',
+                'image_path' => $product->image_path,
+                'name_product' => $product->name_product,
+                'harga' => $product->harga
+            ]);
+            $order->save();
+
+            // Commit transaksi
+            DB::commit();
+
+            return response()->json(['success' => true, 'redirect' => route('orders.success')]);
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi error
+            DB::RollBack();
+            Log::error('Error processing order: ' . $e->getMessage());
+            return response()->json(['success' => false, 'error' => 'Gagal memproses pesanan.']);
+        }
     }
+    
 
     public function success()
     {

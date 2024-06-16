@@ -51,10 +51,8 @@ Route::get('/logout-page', function () {
 })->name('logout.page');
 
 // Route untuk menangani pesanan
-Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
-Route::get('/orders/success', function () {
-    return view('orders.success');
-})->name('orders.success');
+Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store')->middleware('auth');
+Route::get('/orders/success', [OrderController::class, 'success'])->name('orders.success');
 
 // Route untuk login admin
 Route::get('admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
@@ -93,7 +91,7 @@ Route::delete('/order/delete/{id}', [OrderController::class, 'destroy'])->name('
 
 // Route untuk menampilkan halaman keranjang
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add')->middleware('auth');
 Route::get('/carts', [CartController::class, 'showCart'])->name('cart.show');
 Route::get('/cart/show/{userId}', [CartController::class, 'showCart'])->name('cart.show');
 Route::post('/cart/update', [CartController::class, 'updateCart']);
