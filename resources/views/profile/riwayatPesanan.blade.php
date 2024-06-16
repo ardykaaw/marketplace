@@ -59,11 +59,14 @@
                                             <td colspan="8" class="text-center">Tidak ada pesanan yang ditemukan.</td>
                                         </tr>
                                     @else
+                                        @php
+                                            Log::info('Orders data:', $orders->toArray());
+                                        @endphp
                                         @foreach ($orders as $index => $order)
                                             <tr id="order-row-{{ $order->id }}">
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>
-                                                    @if($order->product && $order->product->gambar)
+                                                    @if($order->product && $order->product->image_path)
                                                         <img src="{{ asset('storage/' . $order->product->image_path) }}" alt="Gambar Produk" style="width: 50px; height: 50px;">
                                                     @else
                                                         Gambar tidak tersedia

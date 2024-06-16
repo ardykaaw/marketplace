@@ -48,11 +48,11 @@
                     <tr class="order-row">
                         <td>{{ $order->id }}</td>
                         <td>{{ $order->user->name ?? 'User not found' }}</td>
-                        <td>{{ $order->product->nama_product }}</td>
-                        <td>{{ $order->product->category }}</td>
+                        <td>{{ $order->product->nama_product ?? 'Product not found' }}</td>
+                        <td>{{ $order->product->category ?? 'Category not found' }}</td>
                         <td>
-                            <p>Spesifikasi: {{ $order->product->spesifikasi }}</p>
-                            <p>Harga: Rp{{ number_format($order->product->harga, 2) }}</p>
+                            <p>Spesifikasi: {{ $order->product->spesifikasi ?? 'Spesifikasi not found' }}</p>
+                            <p>Harga: Rp{{ number_format($order->product->harga ?? 0, 2) }}</p>
                         </td>
                         <td>{{ $order->quantity }}</td>
                         <td>Rp{{ number_format($order->total, 2) }}</td>

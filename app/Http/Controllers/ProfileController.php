@@ -30,6 +30,12 @@ class ProfileController extends Controller
         $userId = Auth::id();
         $orders = Order::where('user_id', $userId)->with('product')->get();
 
+        // Pastikan setiap order memiliki data gambar dan nama produk
+        foreach ($orders as $order) {
+            $order->product_image = $order->product->image_path ?? 'default_image.jpg';
+            $order->product_name = $order->product->name_product ?? 'Nama Produk Tidak Tersedia';
+        }
+
         return view('profile.riwayatPesanan', compact('orders'));
     }
 
