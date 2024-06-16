@@ -55,10 +55,20 @@
                                 </thead>
                                 <tbody id="orderTableBody">
                                     @if($orders->isEmpty())
-                                        <p>Tidak ada pesanan yang ditemukan.</p>
+                                        <tr>
+                                            <td colspan="8" class="text-center">Tidak ada pesanan yang ditemukan.</td>
+                                        </tr>
                                     @else
-                                        @foreach ($orders as $order)
+                                        @foreach ($orders as $index => $order)
                                             <tr id="order-row-{{ $order->id }}">
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>
+                                                    @if($order->product && $order->product->gambar)
+                                                        <img src="{{ asset('storage/' . $order->product->image_path) }}" alt="Gambar Produk" style="width: 50px; height: 50px;">
+                                                    @else
+                                                        Gambar tidak tersedia
+                                                    @endif
+                                                </td>
                                                 <td>{{ $order->product ? $order->product->nama_product : 'Produk tidak ditemukan' }}</td>
                                                 <td>{{ $order->quantity }}</td>
                                                 <td>{{ $order->status }}</td>

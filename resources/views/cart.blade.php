@@ -60,6 +60,34 @@
         </div>
         @endif
     </div>
+
+    <!-- Modal Pembayaran -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Pilih Metode Pembayaran</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="paymentForm">
+                        <div class="form-group">
+                            <label for="payment_method">Metode Pembayaran:</label>
+                            <select class="form-control" id="payment_method" name="payment_method">
+                                <option value="BCA">BCA</option>
+                                <option value="BRI">BRI</option>
+                                <option value="BNI">BNI</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -118,20 +146,7 @@
         }
 
         function checkout() {
-            $.ajax({
-                url: '{{ route('cart.checkout') }}',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    payment_method: 'credit_card' // Contoh metode pembayaran
-                },
-                success: function(response) {
-                    window.location.href = '{{ route("profile.riwayatPesanan") }}';
-                },
-                error: function(xhr) {
-                    alert('Error: ' + xhr.responseText);
-                }
-            });
+            $('#paymentModal').modal('show'); // Menampilkan modal pembayaran
         }
 
         $(document).ready(function() {
@@ -152,6 +167,29 @@
                     error: function() {
                         alert('Error adding product to cart');
                         $('#add-to-cart-button').prop('disabled', false); // Aktifkan kembali tombol jika terjadi error
+                    }
+                });
+            });
+
+            $('#paymentForm').submit(function(event) {
+                event.preventDefault();
+                let paymentMethod = $('#payment_method').val();
+
+                $.ajax({
+                    url: '{{ route('orders.store') }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        payment_method: paymentMethod,
+                        // Tambahkan data lain yang diperlukan seperti product_id, user_id, dll.
+                    },
+                    success: function(response) {
+                        $('#paymentModal').modal('hide');
+                        alert('Pembayaran berhasil!');
+                        window.location.href = '{{ route("profile.riwayatPesanan") }}'; // Redirect setelah pembayaran
+                    },
+                    error: function(xhr) {
+                        alert('Error: ' + xhr.responseText);
                     }
                 });
             });

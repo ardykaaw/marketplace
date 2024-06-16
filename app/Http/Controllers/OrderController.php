@@ -12,25 +12,24 @@ class OrderController extends Controller
 {
     public function store(Request $request)
     {
+        Log::info('Received data:', $request->all());
         if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'Anda harus login untuk membuat pesanan.');
+            return response()->json(['error' => 'Anda harus login untuk membuat pesanan.'], 401);
         }
 
         $validatedData = $request->validate([
-            'product_id' => 'required|integer',
-            'quantity' => 'required|integer',
-            'payment_method' => 'required|string'
+            'payment_method' => 'required|string',
+            // Validasi data lainnya
         ]);
 
-        // Proses penyimpanan data atau transaksi pembayaran
-        try {
-            // Simulasi proses transaksi
-            // Misalnya menyimpan ke database
-            Order::create($validatedData);
-            return response()->json(['success' => 'Order processed successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Error processing order'], 500);
-        }
+        $order = new Order();
+        $order->user_id = auth()->id();
+        $order->payment_method = $validatedData['payment_method'];
+        $order->status = 'pending';
+        // Set properties lainnya
+        $order->save();
+
+        return response()->json(['success' => 'Order processed successfully']);
     }
 
     public function success()

@@ -89,7 +89,8 @@ class CartController extends Controller
                     'product_id' => $product->id,
                     'quantity' => $product->pivot->quantity,
                     'status' => 'pending',
-                    'payment_method' => $request->payment_method
+                    'payment_method' => $request->payment_method,
+                    'image_path' => $product->image_path
                 ]);
             }
 

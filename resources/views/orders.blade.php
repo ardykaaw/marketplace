@@ -180,9 +180,6 @@
                                     <option value="BNI">BNI</option>
                                 </select>
                             </div>
-                            <div id="payment-guide" class="mt-3">
-                                <!-- Panduan pembayaran akan ditampilkan di sini -->
-                            </div>
                             <button type="submit" class="btn btn-primary mt-3">Konfirmasi Pembayaran</button>
                         </form>
                     </div>
@@ -258,17 +255,20 @@
                 event.preventDefault();
                 var form = $(this);
                 var formData = form.serialize();
-                console.log(formData); // Cek data yang dikirim
                 $.ajax({
                     type: 'POST',
                     url: form.attr('action'),
                     data: formData,
                     success: function(response) {
-                        window.location.href = '{{ route('orders.success') }}'; // Redirect ke halaman sukses
+                        if (response.success) {
+                            window.location.href = '{{ route('orders.success') }}';
+                        } else {
+                            alert(response.error);
+                        }
                     },
                     error: function(xhr) {
-                        console.error('Error confirming payment:', xhr.responseText); // Tampilkan error
                         alert('Error confirming payment. Please try again.');
+                        console.error('Error confirming payment:', xhr.responseText);
                     }
                 });
             });
