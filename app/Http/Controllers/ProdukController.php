@@ -13,6 +13,12 @@ class ProdukController extends Controller
 
         if ($request->has('search')) {
             $query->where('nama_product', 'like', '%' . $request->search . '%');
+        } 
+        if($request->has('category')){ 
+            if ($request->category != 'all') {
+                $query->where('category',$request->category);
+            }
+            
         }
 
         $products = $query->get();
@@ -101,4 +107,5 @@ class ProdukController extends Controller
         $products = Product::all(); // Mengambil semua produk
         return view('admin.manage_products', compact('products'));
     }
+    
 }

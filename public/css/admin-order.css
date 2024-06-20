@@ -1,26 +1,23 @@
 
-.sidebar {
-    background-color: #343a40; /* Warna sidebar diubah */
-    height: 100vh;
-    padding: 20px 0;
-    width: 400px; /* Lebar sidebar diubah dari default menjadi 250px */
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow-y: auto;
+:root {
+    --primary: #232946;
+    --secondary: #EEBBC3;
+    --thirty: #B8C1EC;
+    --bg-main: #121629;
+    --card: #FFFFFE;
 }
-
-.sidebar a {
-    color: #ffffff; /* Warna teks diubah agar kontras dengan warna sidebar baru */
-    text-decoration: none;
-    display: block;
-    padding: 10px 20px;
-    transition: background-color 0.3s ease;
-    font-size: 22px; /* Ukuran huruf diperbesar sedikit */
+@font-face {
+    font-family: "Josefin Sans";
+    src: url("/fonts/josefin-sans/JosefinSans-regular.ttf") format('truetype');
 }
-
-.sidebar a:hover {
-    background-color: #495057; /* Warna hover diubah agar sesuai dengan warna sidebar baru */
+@font-face {
+    font-family: "Verdana";
+    src: url("/fonts/verdana/verdana.ttf") format('truerype');
+}
+body {
+    background-color: var(--bg-main);
+    color: #212529;
+    margin: 0;
 }
 .content {
     margin-left: 400px; /* Margin kiri diubah sesuai dengan lebar sidebar baru */

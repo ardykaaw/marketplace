@@ -92,8 +92,16 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                    {{-- @php
+                        use Add\Models\Cart;
+                        $jumlahItemCart = Cart::count()
+                    @endphp --}}
+                    <li class="nav-item position-relative">
                         <a class="nav-link" href="{{ route('cart') }}"><i class="bi bi-cart"></i></a>
+                        <span class="position-absolute bottom-50 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{-- {{ $jumlahItemCart }} --}}
+                            {{-- <span class="visually-hidden">unread messages</span> --}}
+                        </span>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button"

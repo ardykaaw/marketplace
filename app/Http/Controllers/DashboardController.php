@@ -1,4 +1,4 @@
-/* Start of Selection */
+<!-- /* Start of Selection */ -->
 <?php
 
 namespace App\Http\Controllers;
@@ -16,8 +16,8 @@ class DashboardController extends Controller
         $totalUsers = User::count();
         $totalOrders = Order::count();
         $monthlyRevenue = Order::whereMonth('created_at', now()->month)
-                               ->whereYear('created_at', now()->year)
-                               ->sum('total');
+            ->whereYear('created_at', now()->year)
+            ->sum('total');
 
         return view('admin.dashboard', compact('products', 'totalUsers', 'monthlyRevenue', 'totalOrders'));
     }

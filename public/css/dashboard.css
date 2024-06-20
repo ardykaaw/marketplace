@@ -7,13 +7,22 @@
     --bg-main: #121629;
     --card: #fffffe;
 }
+@font-face {
+    font-family: "Josefin Sans";
+    src: url("/fonts/josefin-sans/JosefinSans-regular.ttf") format('truetype');
+}
+@font-face {
+    font-family: "Verdana";
+    src: url("/fonts/verdana/verdana.ttf") format('truerype');
+}
 body {
     background-color: var(--bg-main);
     color: #212529;
     margin: 0;
-    font-family: Arial, sans-serif;
+    /* font-family: Arial, sans-serif; */
+    /* font-family: "Verdana"; */
 }
-sidebar {
+.sidebar {
     background-color: var(--primary);
     height: 100vh;
     padding: 20px 0;
@@ -31,6 +40,7 @@ sidebar {
     padding: 10px 20px;
     transition: background-color 0.3s ease;
     font-size: 22px;
+    font-family: "Josefin Sans";
 }
 
 .sidebar a:hover {

@@ -55,6 +55,7 @@ class ProfileController extends Controller
         ]);
 
         $user = Auth::user();
+        // Log::info('User found: ' . $user);
         $user->update($request->only(['name', 'email', 'address']));
 
         return redirect()->route('profile.view')->with('success', 'Profil berhasil diperbarui.');

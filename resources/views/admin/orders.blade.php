@@ -10,16 +10,18 @@
 </head>
 <body>
 <div class="d-flex">
+    @include('admin.sidebar')
     <!-- Sidebar -->
-    <div class="sidebar">
+    {{-- <div class="sidebar">
         <h2 class="text-center">ADMIN</h2>
         <nav class="nav flex-column">
             <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
             <a class="nav-link" href="{{ route('admin.create_product') }}">Add Product</a>
             <a class="nav-link" href="{{ route('admin.orders') }}">Orders</a>
             <a class="nav-link" href="{{ route('admin.reviews') }}">Reviews</a>
+            <a class="nav-link" href="{{ route('admin.manage_products') }}">Produk</a>
         </nav>
-    </div>
+    </div> --}}
     <!-- Main Content -->
     <div class="content container mt-5">
         <h1>Orders</h1>

@@ -7,42 +7,22 @@
     --bg-main: #121629;
     --card: #fffffe;
 }
+@font-face {
+    font-family: "Josefin Sans";
+    src: url("/fonts/josefin-sans/JosefinSans-Bold.ttf") format('truetype');
+}
+@font-face {
+    font-family: "Verdana";
+    src: url("/fonts/verdana/verdana.ttf") format('truerype');
+}
 body {
     background-color: var(--bg-main);
+    font-family: "Verdana";
 }
-.sidebar {
-    background-color: var(--primary); /* Warna sidebar diubah */
-    height: 100vh;
-    padding: 20px 0;
-    width: 400px; /* Lebar sidebar diubah dari default menjadi 250px */
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-}
-
-.sidebar a {
-    color: #ffffff; /* Warna teks diubah agar kontras dengan warna sidebar baru */
-    text-decoration: none;
-    display: block;
-    padding: 10px 20px;
-    transition: background-color 0.3s ease;
-    font-size: 22px; /* Ukuran huruf diperbesar sedikit */
-}
-
-.sidebar a:hover {
-    background-color: #495057; /* Warna hover diubah agar sesuai dengan warna sidebar baru */
-}
-
 .content {
     margin-left: 400px; 
-    /* padding: 20px; */
-    /* overflow: auto; */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    /* width: 100%; */
-    height: 96vh;
+    height: 100vh;
 }
 .card-container {
     display: flex;

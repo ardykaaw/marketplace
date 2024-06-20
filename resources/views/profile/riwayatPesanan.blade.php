@@ -27,7 +27,8 @@
                         <span class="emailSidebarleft">{{ Auth::user()->email }}</span>
                     </p>
                     <p><a href="{{ route('profile.view') }}">Akun saya</a></p>
-                    <p><a class="text-white text-decoration-none" href="{{ route('profile.riwayatPesanan') }}">Riwayat pesanan</a></p>
+                    <p><a class="text-white text-decoration-none" href="{{ route('profile.riwayatPesanan') }}">Riwayat
+                            pesanan</a></p>
                     <p><a class="text-white text-decoration-none" href="{{ route('profile.edit') }}">Edit profile</a></p>
                     <p><a class="text-white text-decoration-none" href="{{ route('logout') }}">LogOut</a></p>
                 @endauth
@@ -55,30 +56,38 @@
                                     </tr>
                                 </thead>
                                 <tbody id="orderTableBody">
-                                    @if($orders->isEmpty())
+                                    @if ($orders->isEmpty())
                                         <tr>
-                                            <td colspan="9" class="text-center">Tidak ada pesanan yang ditemukan.</td>
+                                            <td colspan="9" class="text-center">Tidak ada pesanan yang ditemukan.
+                                            </td>
                                         </tr>
                                     @else
                                         @php
                                             Log::info('Orders data:', $orders->toArray());
                                         @endphp
                                         @foreach ($orders as $index => $order)
+                                            {{-- {{ dd($orders) }} --}}
                                             <tr id="order-row-{{ $order->id }}">
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>{{ $order->product ? $order->product->nama_product : 'Produk tidak ditemukan' }}</td>
-                                                <td>
-                                                    <img src="{{ asset($order->gambar) }}" alt="Gambar Produk" style="width: 50px; height: 50px;">
+                                                <td>{{ $order->product ? $order->product->nama_product : 'Produk tidak ditemukan' }}
                                                 </td>
-                                                <td>{{ $order->product ? 'Rp ' . number_format($order->product->harga, 0, ',', '.') : 'Harga tidak tersedia' }}</td>
+                                                <td>
+                                                    <img src="{{ asset($order->gambar) }}" alt="Gambar Produk"
+                                                        style="width: 50px; height: 50px;">
+                                                </td>
+                                                <td>{{ $order->product ? 'Rp ' . number_format($order->product->harga, 0, ',', '.') : 'Harga tidak tersedia' }}
+                                                </td>
                                                 <td>{{ $order->quantity }}</td>
-                                               
+
                                                 <td>{{ $order->status }}</td>
                                                 <td>{{ $order->created_at->format('d M Y') }}</td>
                                                 <td>{{ $order->payment_method }}</td>
                                                 <td>
-                                                    <button class="btn btn-primary" onclick="setOrderId({{ $order->id }})" data-toggle="modal" data-target="#reviewModal">Beri Ulasan</button>
-                                                    <button class="btn btn-danger" onclick="deleteOrder({{ $order->id }})">Hapus</button>
+                                                    <button class="btn btn-primary"
+                                                        onclick="setOrderId({{ $order->id }})" data-toggle="modal"
+                                                        data-target="#reviewModal">Beri Ulasan</button>
+                                                    <button class="btn btn-danger"
+                                                        onclick="deleteOrder({{ $order->id }})">Hapus</button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -87,8 +96,10 @@
                             </table>
                             @auth
                                 @if ($orders->count() > 10)
-                                    <button id="showMoreBtn" class="btn btn-secondary" onclick="showMoreOrders()">Tampilkan Lebih Banyak</button>
-                                    <button id="showLessBtn" class="btn btn-secondary d-none" onclick="showLessOrders()">Tampilkan Lebih Sedikit</button>
+                                    <button id="showMoreBtn" class="btn btn-secondary" onclick="showMoreOrders()">Tampilkan
+                                        Lebih Banyak</button>
+                                    <button id="showLessBtn" class="btn btn-secondary d-none"
+                                        onclick="showLessOrders()">Tampilkan Lebih Sedikit</button>
                                 @endif
                             @endauth
                         </div>

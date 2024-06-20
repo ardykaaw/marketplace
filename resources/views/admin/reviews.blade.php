@@ -9,17 +9,7 @@
 </head>
 <body>
 <div class="d-flex">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h2 class="text-center">ADMIN</h2>
-        <nav class="nav flex-column">
-            <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
-            <a class="nav-link" href="{{ route('admin.create_product') }}">Add Product</a>
-            <a class="nav-link" href="{{ route('admin.orders') }}">Orders</a>
-            <a class="nav-link" href="{{ route('admin.reviews') }}">Reviews</a>
-        </nav>
-    </div>
-    <!-- Main Content -->
+    @include('admin.sidebar')
     <div class="content container mt-5">
         <div class="card shadow-lg p-3 mb-5 bg-white rounded">
             <div class="card-body">

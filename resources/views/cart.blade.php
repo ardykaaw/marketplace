@@ -16,6 +16,7 @@
         <div class="cart-items">
             <h1>Keranjang Belanja</h1>
             @if(isset($cart) && $cart->products->count() > 0)
+            {{-- {{ dd($cart->products) }} --}}
                 <table class="table">
                     <thead>
                         <tr>

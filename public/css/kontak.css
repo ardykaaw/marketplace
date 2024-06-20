@@ -7,17 +7,24 @@
     --card: #FFFFFE;
 }
 
+
+@font-face {
+    font-family: "Josefin Sans";
+    src: url("/fonts/josefin-sans/JosefinSans-Bold.ttf") format('truetype');
+}
+@font-face {
+    font-family: "Verdana";
+    src: url("/fonts/verdana/verdana.ttf") format('truerype');
+}
+
 body {
     background: var(--bg-main);
     color: #fff;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Verdana', sans-serif;
 }
 
 .container {
-    /* background: #2c2c54; */
     padding: 0 100px;
-    /* border-radius: 8px; */
-    /* box-shadow: 0 4px 8px rgba(0,0,0,0.1); */
 }
 
 /* .form-label {
@@ -48,7 +55,7 @@ body {
     background-color: #ff4757;
 } */
 
-/* .loader {
+.loader {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -60,7 +67,7 @@ body {
     border-top: 5px solid #3498db;
     animation: spin 1s linear infinite;
     transform: translate(-50%, -50%);
-} */
+}
 
 @keyframes spin {
     0% {

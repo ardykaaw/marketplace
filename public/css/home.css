@@ -5,10 +5,20 @@
     --bg-main: #121629;
     --card: #fffffe;
 }
+
+@font-face {
+    font-family: "Josefin Sans";
+    src: url("/fonts/josefin-sans/JosefinSans-Bold.ttf") format('truetype');
+}
+@font-face {
+    font-family: "Verdana";
+    src: url("/fonts/verdana/verdana.ttf") format('truerype');
+}
 body {
     color: #fff;
     font-family: "Inter", sans-serif;
     overflow-x: hidden;
+    font-family: "Verdana";
 }
 
 ::selection {
@@ -33,12 +43,14 @@ body {
     font-size: 3rem;
     margin-bottom: 20px;
     font-weight: bold;
+    font-family: "Josefin Sans";
 }
 
 .banner-content p {
     font-size: 1.3rem;
     font-weight: 100;
     margin-bottom: 20px;
+    font-family: "Verdana";
 }
 
 .banner-content .btn {
@@ -178,7 +190,7 @@ body {
     text-align: center;
 }
 
-.cursor-ball {
+/* .cursor-ball {
     position: fixed;
     width: 20px;
     height: 20px;
@@ -213,7 +225,7 @@ body {
         transform: translate(-50%, -50%) scale(1.5);
         opacity: 0;
     }
-}
+} */
 
 .special-collection {
     background-color: var(--bg-main);
@@ -349,7 +361,7 @@ body {
     background-color: var(--bg-main);
 }
 
-.particle {
+/* .particle {
     position: fixed;
     width: 5px;
     height: 5px;
@@ -358,9 +370,9 @@ body {
     pointer-events: none;
     animation: particleMove 3s linear infinite;
     opacity: 0;
-}
+} */
 
-@keyframes particleMove {
+/* @keyframes particleMove {
     0% {
         transform: translate(0, 0) scale(1);
         opacity: 1;
@@ -381,14 +393,4 @@ body {
         transform: translate(-50px, -200px) scale(0.2);
         opacity: 0;
     }
-}
-
-#particleCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
+} */

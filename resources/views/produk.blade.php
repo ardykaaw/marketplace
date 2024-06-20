@@ -57,8 +57,12 @@
                             </div>
                         </form>
                     </div>
-                    <li class="nav-item">
+                    <li class="nav-item position-relative">
                         <a class="nav-link" href="{{ route('cart') }}"><i class="bi bi-cart"></i></a>
+                        <span class="position-absolute bottom-50 start-100 translate-middle badge rounded-pill bg-danger">
+                            99+
+                            {{-- <span class="visually-hidden">unread messages</span> --}}
+                        </span>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button"
@@ -101,9 +105,11 @@
             <div class="filter-container">
                 <select id="productFilter" class="filter-select">
                     <option value="all">Semua Produk</option>
-                    <option value="headphone">Headphones</option>
-                    <option value="earphones">Earphones</option>
-                    <option value="speaker">Speaker</option>
+                    <option value="headphone" {{ request('category') == 'headphone' ? 'selected' : '' }}>Headphones
+                    </option>
+                    <option value="earphone" {{ request('category') == 'earphone' ? 'selected' : '' }}>Earphones
+                    </option>
+                    <option value="speaker"{{ request('category') == 'speaker' ? 'selected' : '' }}>Speaker</option>
                 </select>
             </div>
             <h3 class="text-center">Temukan Koleksi Terbaik Kami!</h3>
@@ -119,10 +125,10 @@
                                     alt="{{ $product->nama_product }}">
                                 <div class="card-body">
                                     <h5 class="card-title" style="color: #fff">{{ $product->nama_product }}</h5>
-                                    <p class="card-text" style="color:#fff">Rp.{{ number_format($product->harga) }}
+                                    <p class="card-text" style="color:#fff">
+                                        Rp.{{ number_format($product->harga) }}
                                     </p>
-                                    <a href="{{ route('orders', $product->id) }}"
-                                        class="btn mt-auto">Details</a>
+                                    <a href="{{ route('orders', $product->id) }}" class="btn mt-auto">Details</a>
                                 </div>
                             </div>
                         </div>
@@ -136,8 +142,9 @@
     </div>
     <script>
         document.getElementById('productFilter').addEventListener('change', function() {
-            var selectedType = this.value;
-            window.location.href = `?type=${selectedType}`;
+            var category = this.value;
+            // alert(category)
+            window.location.href = `?category=${category}`;
         });
     </script>
     <script src="{{ asset('js/script.js') }}"></script>

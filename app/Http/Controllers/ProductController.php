@@ -44,4 +44,7 @@ class ProductController extends Controller
         $products = Product::all(); // Ambil semua produk atau sesuai kebutuhan
         return view('admin.dashboard', compact('products'));
     }
+
+    
 }
+

@@ -30,21 +30,51 @@ class AdminController extends Controller
 
     public function storeProduct(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
+        // $request->validate([
+        //     'name' => 'required',
+        //     'price' => 'required|numeric',
+        //     'description' => 'required',
+        //     'image' => 'required|image', // Pastikan gambar diuploadspesifikasi
+        //     'category' => 'required|string|in:headphone,earphone,speaker',
+        // ]);
+
+        // $productData = $request->all();
+
+
+        // if ($request->hasFile('image')) {
+        //     $path = $request->file('image')->store('public/images');
+        //     $productData['image_path'] = $path;
+        // }
+
+        // Product::create($productData);
+
+        // Validasi data input
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'description' => 'required',
-            'image' => 'required|image' // Pastikan gambar diupload
+            'description' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'category' => 'required|string|in:headphone,earphone,speaker', 
         ]);
 
-        $productData = $request->all();
-
+        // Simpan gambar
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('public/images');
-            $productData['image_path'] = $path;
+            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+            $categoryPath = 'images/' . $validatedData['category'];
+            $request->image->storeAs('public/' . $categoryPath, $imageName);
+            $imagePath = 'storage/' . $categoryPath . '/' . $imageName; // path gambar untuk disimpan di database
+        } else {
+            $imagePath = null;
         }
 
-        Product::create($productData);
+        // Simpan data produk ke database
+        Product::create([
+            'nama_product' => $validatedData['name'],
+            'harga' => $validatedData['price'],
+            'spesifikasi' => $validatedData['description'],
+            'image_path' => $imagePath,
+            'category' => $validatedData['category'],
+        ]);
 
         return redirect()->route('admin.dashboard')->with('success', 'Product created successfully.');
     }
@@ -54,27 +84,39 @@ class AdminController extends Controller
         return view('admin.edit_product', compact('product'));
     }
 
+
     public function updateProduct(Request $request, Product $product)
     {
         $request->validate([
             'name' => 'required',
             'price' => 'required|numeric',
             'description' => 'required',
-            'image' => 'image|nullable'
+            'image' => 'image|nullable',
+            'category' => 'required|string|in:headphone,earphone,speaker',
         ]);
 
         $product->nama_product = $request->name;
         $product->harga = $request->price;
         $product->spesifikasi = $request->description;
+        $product->category = $request->category;
+
+        // if ($request->hasFile('image')) {
+        //     $path = $request->file('image')->store('public/images');
+        //     $product->image_path = $path;
+        // }
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('public/images');
-            $product->image_path = $path;
+            $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+            $categoryPath = 'images/' . $request->category;
+            $request->image->storeAs('public/' . $categoryPath, $imageName);
+            $imagePath = 'storage/' . $categoryPath . '/' . $imageName; 
+
+            $product->image_path = $imagePath;
         }
 
         $product->save();
 
-        return redirect()->route('admin.edit_product', $product->id)->with('success', 'Produk berhasil diperbarui.');
+        return redirect()->route('admin.manage_products', $product->id)->with('success', 'Produk berhasil diperbarui.');
     }
 
     public function deleteProduct(Request $request, Product $product)

@@ -1,0 +1,66 @@
+:root {
+    --primary: #232946;
+    --secondary: #eebbc3;
+    --thirty: #b8c1ec;
+    --bg-main: #121629;
+    --card: #fffffe;
+}
+body {
+    background: var(--primary);
+}
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+@font-face {
+    font-family: "Josefin Sans";
+    src: url("/fonts/josefin-sans/JosefinSans-regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Verdana";
+    src: url("/fonts/verdana/verdana.ttf") format("truerype");
+}
+
+body {
+    font-family: "Verdana";
+}
+
+label,
+h3 {
+    font-family: "Josefin Sans";
+}
+
+.card-custom {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.card-custom:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+}
+
+.circlePink,
+.circleBlue {
+    position: absolute;
+    aspect-ratio: 1/1;
+    width: 350px;
+    border-radius: 100%;
+    filter: blur(140px);
+    -webkit-filter: blur(140px);
+}
+
+.circlePink {
+    background: rgba(238, 187, 195, 0.63);
+}
+.circleBlue {
+    background: rgba(184, 193, 236, 0.63);
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+}

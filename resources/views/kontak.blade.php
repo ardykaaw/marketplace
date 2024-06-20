@@ -38,14 +38,17 @@
                         <input type="hidden" name="rating" value="5">
                         <!-- Contoh static rating, sesuaikan sesuai kebutuhan -->
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="username">
                         </div>
+                        {{-- <div class="mb-3">
+                            <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+                        </div> --}}
                         <div class="mb-3">
                             <input type="email" class="form-control" id="email" name="email"
                                 placeholder="Email">
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="subject" name="subject"
+                            <input type="text" class="form-control" id="subjek" name="subjek"
                                 placeholder="Subjek">
                         </div>
                         <div class="mb-3">

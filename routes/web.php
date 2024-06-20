@@ -17,7 +17,7 @@ Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
 Route::get('/product/{id}', [ProdukController::class, 'show'])->name('orders');
 
 // Route untuk halaman kontak
-Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
+// Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
 Route::post('/submit-kontak', [KontakController::class, 'submitKontak'])->name('submit.kontak');
 Route::get('/about', [AboutController::class, 'about'])->name('about');
 
@@ -107,7 +107,7 @@ Route::get('/review/create', [ReviewController::class, 'create'])->name('review.
 Route::post('/reviews/store', [ReviewController::class, 'store'])->name('review.store');
 
 // Pastikan Anda memiliki route yang sesuai di routes/web.php yang mengarah ke method submitKontak ini:
-Route::post('/submit-kontak', [KontakController::class, 'submitKontak'])->name('submit.kontak');
+// Route::post('/submit-kontak', [KontakController::class, 'submitKontak'])->name('submit.kontak');
 
 // Route untuk lupa password
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
