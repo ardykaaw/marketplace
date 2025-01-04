@@ -41,7 +41,7 @@
                 <div class="pt-4"></div>
                 <div class="card shadow-lg p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h1 class="card-title">Create Product</h1>
+                        <h1 class="card-title text-center">Create Product</h1>
                         <form action="{{ route('admin.store_product') }}" method="POST" enctype="multipart/form-data"
                             onsubmit="return showAlert()">
                             @csrf
@@ -75,7 +75,7 @@
                                 <label for="image" class="form-label">Product Image</label>
                                 <input type="file" class="form-control" id="image" name="image" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-primary" style="background-color: #007bff; border-color: #007bff;">Create</button>
                         </form>
                     </div>
                 </div>

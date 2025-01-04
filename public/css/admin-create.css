@@ -16,7 +16,7 @@
     src: url("/fonts/verdana/verdana.ttf") format('truerype');
 }
 body {
-    background-color: var(--bg-main);
+    background-color: #f0f8ff; /* Light blue background */
     font-family: "Verdana";
 }
 .content {
@@ -30,4 +30,13 @@ body {
 }
 .card {
     width: 80%;
+    border: 1px solid #007bff; /* Blue border for cards */
+}
+.btn-primary {
+    background-color: #007bff; /* Blue button */
+    border-color: #007bff; /* Blue border for button */
+}
+.alert {
+    background-color: #cce5ff; /* Light blue alert background */
+    color: #004085; /* Dark blue text for alert */
 }

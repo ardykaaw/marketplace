@@ -43,7 +43,7 @@
                                         <div class="search-box-icon">
                                             <button class="btn-icon-content">
                                                 <i class="search-icon">
-                                                    <svg xmlns="://www.w3.org/2000/svg" version="1.1"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
                                                         viewBox="0 0 512 512">
                                                         <path
                                                             d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
@@ -92,7 +92,7 @@
         <script>
             let lastScrollTop = 0;
             window.addEventListener("scroll", function() {
-                let st = window.pageYOffset or document.documentElement.scrollTop;
+                let st = window.pageYOffset || document.documentElement.scrollTop;
                 if (st > lastScrollTop) {
                     document.querySelector('.navbar').style.top = "-100px";
                 } else {
@@ -128,7 +128,7 @@
                                     <p class="card-text" style="color:#fff">
                                         Rp.{{ number_format($product->harga) }}
                                     </p>
-                                    <a href="{{ route('orders', $product->id) }}" class="btn mt-auto">Details</a>
+                                    <a href="{{ route('orders', $product->id) }}" class="btn mt-auto" style="background-color: #007bff; color: #fff;">Details</a>
                                 </div>
                             </div>
                         </div>

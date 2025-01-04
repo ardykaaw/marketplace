@@ -41,6 +41,7 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
+
 // Menampilkan form registrasi
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
@@ -112,3 +113,5 @@ Route::post('/reviews/store', [ReviewController::class, 'store'])->name('review.
 // Route untuk lupa password
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');

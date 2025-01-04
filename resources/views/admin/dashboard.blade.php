@@ -27,19 +27,14 @@
 </head>
 
 <body>
-    <div class="d-flex">
+    <div class="d-flex flex-column">
         @include('admin.sidebar')
-        <!-- Sidebar -->
-        {{-- <div class="sidebar">
-            <h2 class="text-center">ADMIN</h2>
-            <nav class="nav flex-column">
-                <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
-                <a class="nav-link" href="{{ route('admin.create_product') }}">Add Product</a>
-                <a class="nav-link" href="{{ route('admin.orders') }}">Orders</a>
-                <a class="nav-link" href="{{ route('admin.reviews') }}">Reviews</a>
-                <a class="nav-link" href="{{ route('admin.manage_products') }}">Produk</a>
-            </nav>
-        </div> --}}
+
+        <!-- Header Section -->
+        <div class="header text-center mb-4">
+            <h1>Dashboard Admin</h1>
+            <p>Welcome to the admin dashboard. Here you can manage your store effectively.</p>
+        </div>
 
         <!-- Main Content -->
         <div class="content">
@@ -58,32 +53,27 @@
                     $totalKontak = Kontak::count();
                     $cards = [
                         [
-                            'color' => '#eebbc3',
+                            'color' => '#007bff',
                             'title' => 'Total Produk',
                             'text' => 'Jumlah total produk yang tersedia di toko:' . $totalProduct . ' products',
                         ],
                         [
-                            'color' => '#eebbc3',
+                            'color' => '#0056b3',
                             'title' => 'Total Pesanan',
                             'text' => 'Jumlah total pesanan yang telah diterima: ' . $totalOrders . ' pesanan',
                         ],
                         [
-                            'color' => '#eebbc3',
+                            'color' => '#007bff',
                             'title' => 'Total Ulasan',
                             'text' => 'Jumlah total ulasan produk yang diberikan oleh pelanggan: ' . $totalReviews . ' ulasan',
                         ],
-                        // [
-                        //     'color' => '#eebbc3',
-                        //     'title' => 'Pendapatan Bulanan',
-                        //     'text' => 'Total pendapatan yang diperoleh dalam bulan ini: Rp',
-                        // ],
                         [
-                            'color' => '#eebbc3',
+                            'color' => '#0056b3',
                             'title' => 'Pengguna Terdaftar',
                             'text' => 'Jumlah total pengguna yang terdaftar di aplikasi: ' . $totalUsers . ' pengguna',
                         ],
                         [
-                            'color' => '#eebbc3',
+                            'color' => '#007bff',
                             'title' => 'Total Kontak',
                             'text' => 'Jumlah total kontak yang masuk di aplikasi: ' . $totalKontak . ' kontak',
                         ],
@@ -93,15 +83,17 @@
                 @foreach ($cards as $card)
                     <div class="col-md-4 mb-3">
                         <div class="card text-white" style="background-color: {{ $card['color'] }};">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $card['title'] }}</h5>
-                                <p class="card-text">{{ $card['text'] }}</p>
+                            <div class="card-body d-flex align-items-center">
+                                <i class="bi bi-box-fill me-2" style="font-size: 2rem;"></i>
+                                <div>
+                                    <h5 class="card-title">{{ $card['title'] }}</h5>
+                                    <p class="card-text">{{ $card['text'] }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-
         </div>
     </div>
     <!-- Bootstrap JS -->

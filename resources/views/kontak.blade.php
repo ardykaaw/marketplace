@@ -16,7 +16,7 @@
         {{-- @include('navbar') --}}
 
         <div class="container pt-5">
-            <h2 class="contact-title">CONTACT US</h2>
+            <h2 class="contact-title" style="color: #007bff;">CONTACT US</h2>
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
@@ -55,7 +55,7 @@
                             <textarea class="form-control" id="pesan" name="pesan" rows="3" placeholder="Pesan"></textarea>
                         </div>
                         <div class="buttonContactUs">
-                            <button type="submit" class="btn btn-primary">Kirim</button>
+                            <button type="submit" class="btn" style="background-color: #007bff; color: #fff;">Kirim</button>
                         </div>
                     </form>
                 </div>

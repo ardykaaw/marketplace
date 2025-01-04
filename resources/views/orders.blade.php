@@ -78,6 +78,42 @@
             background-color: rgba(238, 187, 195, 0.63);
             right: -170px;
         }
+
+        /* Animation styles */
+        .success-animation {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 128, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            animation: fadeInOut 3s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .processing-animation {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 165, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            animation: fadeInOut 3s forwards;
+        }
     </style>
 </head>
 
@@ -112,14 +148,14 @@
                             <p class="card-text lead">Harga: {{ $product->harga }}</p>
                             <div class="buttonExpression">
                                 <div class="buttonBuyNow">
-                                    <button type="button" class="btn mt-3" data-toggle="modal" data-target="#paymentModal">Beli Sekarang</button>
+                                    <button type="button" class="btn mt-3" style="background-color: #28a745; color: white;" data-toggle="modal" data-target="#paymentModal">Beli Sekarang</button>
                                 </div>
                                 <div class="buttonAddCart">
                                     <form action="{{ route('cart.add') }}" method="POST" id="addToCartForm">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <input type="hidden" name="quantity" value="1">
-                                        <button type="submit" class="btn mt-3">Masukkan Keranjang</button>
+                                        <button type="submit" class="btn mt-3" style="background-color: #007bff; color: white;">Masukkan Keranjang</button>
                                     </form>
                                 </div>
                             </div>
@@ -128,6 +164,10 @@
                 </div>
             </div>
         </div>
+
+        <!-- Success Animation -->
+        <div class="success-animation" id="cartSuccessMessage">Produk berhasil ditambahkan ke keranjang.</div>
+        <div class="processing-animation" id="processingMessage">Pesanan Anda sedang diproses...</div>
 
         <!-- Modal -->
         <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
@@ -144,15 +184,103 @@
                             @csrf
                             <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
                             <input type="hidden" name="quantity" value="1">
-                            <div class="form-group">
-                                <label for="payment_method">Metode Pembayaran</label>
-                                <select class="form-control" id="payment_method" name="payment_method" required>
-                                    <option value="BCA">BCA</option>
-                                    <option value="BRI">BRI</option>
-                                    <option value="BNI">BNI</option>
-                                </select>
+                            <div class="d-flex flex-column">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card mb-3">
+                                            <div class="card-body text-center">
+                                                <input class="form-check-input" type="radio" name="payment_method" id="bca" value="BCA" required>
+                                                <label class="form-check-label" for="bca">
+                                                    <img src="{{ asset('images/payments/bca.svg.png') }}" alt="BCA" style="width: 50px; height: auto;">
+                                                    <h6>BCA</h6>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card mb-3">
+                                            <div class="card-body text-center">
+                                                <input class="form-check-input" type="radio" name="payment_method" id="bri" value="BRI">
+                                                <label class="form-check-label" for="bri">
+                                                    <img src="{{ asset('images/payments/BRI.png') }}" alt="BRI" style="width: 50px; height: auto;">
+                                                    <h6>BRI</h6>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card mb-3">
+                                            <div class="card-body text-center">
+                                                <input class="form-check-input" type="radio" name="payment_method" id="bni" value="BNI">
+                                                <label class="form-check-label" for="bni">
+                                                    <img src="{{ asset('images/payments/logobni.svg.webp') }}" alt="BNI" style="width: 50px; height: auto;">
+                                                    <h6>BNI</h6>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-link" id="showOtherMethods">Metode Lainnya</button>
+                                <div id="otherMethods" style="display: none;">
+                                    <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            <div class="card mb-3">
+                                                <div class="card-body text-center">
+                                                    <input class="form-check-input" type="radio" name="payment_method" id="dana" value="Dana">
+                                                    <label class="form-check-label" for="dana">
+                                                        <img src="{{ asset('images/payments/DANA.png') }}" alt="Dana" style="width: 50px; height: auto;">
+                                                        <h6>Dana</h6>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card mb-3">
+                                                <div class="card-body text-center">
+                                                    <input class="form-check-input" type="radio" name="payment_method" id="ovo" value="OVO">
+                                                    <label class="form-check-label" for="ovo">
+                                                        <img src="{{ asset('images/payments/OVO.svg.webp') }}" alt="OVO" style="width: 50px; height: auto;">
+                                                        <h6>OVO</h6>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card mb-3">
+                                                <div class="card-body text-center">
+                                                    <input class="form-check-input" type="radio" name="payment_method" id="gopay" value="GoPay">
+                                                    <label class="form-check-label" for="gopay">
+                                                        <img src="{{ asset('images/payments/GOPAY.svg.png') }}" alt="GoPay" style="width: 50px; height: auto;">
+                                                        <h6>GoPay</h6>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card mb-3">
+                                                <div class="card-body text-center">
+                                                    <input class="form-check-input" type="radio" name="payment_method" id="indomaret" value="Indomaret">
+                                                    <label class="form-check-label" for="indomaret">
+                                                        <img src="{{ asset('images/payments/INDOMARET.png') }}" alt="Indomaret" style="width: 50px; height: auto;">
+                                                        <h6>Indomaret</h6>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card mb-3">
+                                                <div class="card-body text-center">
+                                                    <input class="form-check-input" type="radio" name="payment_method" id="alfamart" value="Alfamart">
+                                                    <label class="form-check-label" for="alfamart">
+                                                        <img src="{{ asset('images/payments/ALFAMART.svg.png') }}" alt="Alfamart" style="width: 50px; height: auto;">
+                                                        <h6>Alfamart</h6>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div id="payment-guide"></div>
                             <button type="submit" class="btn btn-primary mt-3">Konfirmasi Pembayaran</button>
                         </form>
                     </div>
@@ -160,6 +288,7 @@
             </div>
         </div>
     </div>
+
     <!-- Tambahkan JS Bootstrap dan jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -209,7 +338,7 @@
                     url: form.attr('action'),
                     data: formData,
                     success: function(response) {
-                        alert('Produk berhasil ditambahkan ke keranjang');
+                        $('#cartSuccessMessage').fadeIn().delay(3000).fadeOut(); // Show success animation
                         var cartCount = parseInt($('#cart-count').text()) || 0;
                         $('#cart-count').text(cartCount + 1);
                     }
@@ -219,19 +348,28 @@
             $('#paymentForm').submit(function(event) {
                 event.preventDefault();
                 var form = $(this);
+                var selectedPaymentMethod = $('input[name="payment_method"]:checked').val();
+
+                if (!selectedPaymentMethod) {
+                    alert('Silakan pilih metode pembayaran.');
+                    return;
+                }
+
                 var formData = {
                     product_id: $('input[name="product_id"]').val(),
                     quantity: 1,
-                    payment_method: $('#payment_method').val(),
+                    payment_method: selectedPaymentMethod,
                     _token: $('input[name="_token"]').val()
                 };
+
                 $.ajax({
                     type: 'POST',
                     url: form.attr('action'),
                     data: formData,
                     success: function(response) {
                         if (response.success) {
-                            window.location.href = response.redirect; // Redirect jika sukses
+                            $('#paymentModal').modal('hide'); // Close the payment modal
+                            $('#processingMessage').fadeIn().delay(3000).fadeOut(); // Show processing animation
                         } else {
                             alert(response.error);
                         }
@@ -280,3 +418,14 @@
             });
         });
     </script>
+
+    <script>
+        document.getElementById('showOtherMethods').addEventListener('click', function() {
+            var otherMethods = document.getElementById('otherMethods');
+            if (otherMethods.style.display === 'none' || otherMethods.style.display === '') {
+                otherMethods.style.display = 'block';
+            } else {
+                otherMethods.style.display = 'none';
+            }
+        });
+    </script>

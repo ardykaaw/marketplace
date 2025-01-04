@@ -164,7 +164,7 @@
                         <img src="{{ asset('images/headphone/headphone-6.png') }}" class="card-img-top" alt="Product 3"
                             style="height: 90px; object-fit: contain;">
                     </div>
-                </div><a href="{{ route('produk') }}" class="btn btn-primary">Buy Now</a>
+                </div><a href="{{ route('produk') }}" class="btn btn-primary" style="background-color: #007bff; border-color: #007bff; position: relative; z-index: 1;" role="button">Buy Now</a>
             </div>
             <div class="image-home">
                 <div class="banner-image">
@@ -224,7 +224,7 @@
         </div>
         <div class="enjoy-music" style="padding: 0 100px;">
             <div class="content">
-                <h2>Enjoy Your Music Everywhere You Want</h2>
+                <h2 style="color: #007bff;">Enjoy Your Music Everywhere You Want</h2>
                 <p>Nikmati kenyamanan belanja produk audio terbaik dengan harga terjangkau. Temukan berbagai pilihan
                     headphone, earphone, dan speaker yang akan meningkatkan pengalaman mendengarkan musik Anda setiap
                     hari.</p>
@@ -244,7 +244,7 @@
         <div class="testimonials-section"
             style="color: #fff; font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 50vh; margin: 0;">
             <div class="testimonial-container" style="text-align: center;">
-                <h2 class="testimonial-header" style="color: #f8c8dc; font-size: 1.5rem; margin-bottom: 20px;">OUR
+                <h2 class="testimonial-header" style="color: #007bff;"; font-size: 1.5rem; margin-bottom: 20px;">OUR
                     CUSTOMERS REVIEW</h2>
                 <div class="testimonial-card"
                     style="background-color: #1a1a2e; padding: 20px; border-radius: 10px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); display: flex; align-items: center; justify-content: center; max-width: 600px; margin: 0 auto;">

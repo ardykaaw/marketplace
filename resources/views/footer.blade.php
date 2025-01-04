@@ -106,7 +106,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <p>Tim Kelompok 3</p>
+                    <!-- <p>Tim Kelompok 3</p> -->
                 </div>
             </div>
         </div>

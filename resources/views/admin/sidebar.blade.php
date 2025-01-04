@@ -54,7 +54,7 @@
 
 <body>
   <div class="sidebar">
-    <h2 class="text-center">ADMIN</h2>
+    <h2 class="text-center" style="color: white;">ADMIN</h2>
     <nav class="nav flex-column">
         <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
         <a class="nav-link" href="{{ route('admin.create_product') }}">Add Product</a>
