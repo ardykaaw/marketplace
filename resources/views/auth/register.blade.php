@@ -10,15 +10,15 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <style>
             :root {
-                --primary: #B8C1EC;
-                --secondary: #EEBBC3;
-                --thirty: #B8C1EC;
-
-                --bg-color: #121629;
+                --primary: #007bff; /* Updated to match auth.login */
+                --bg-main: url('images/loginbg.jpg'); /* Background image from auth.login */
+                --card: rgba(255, 255, 255, 0.9); /* Updated to match auth.login */
             }
 
             body {
-                background: rgba(18, 22, 41, 1);
+                background: var(--bg-main);
+                background-size: cover; /* Ensures the background image covers the entire body */
+                background-position: center; /* Centers the background image */
                 height: 100vh;
                 display: flex;
                 justify-content: center;
@@ -28,10 +28,9 @@
             }
 
             .card {
-                background: rgba(255, 255, 255, 0.1);
+                background: var(--card);
                 border: none;
                 border-radius: 10px;
-                backdrop-filter: blur(10px);
                 padding: 20px;
                 width: 100%;
                 max-width: 700px;
@@ -40,7 +39,7 @@
             }
 
             .form-label {
-                color: #fff;
+                color: #333;
             }
 
             .form-control {
@@ -57,7 +56,7 @@
             }
 
             .btn-primary {
-                background: rgba(255, 255, 255, 0.3);
+                background: rgba(0, 123, 255, 0.3); /* Updated to match auth.login */
                 border: none;
                 width: 100%;
                 padding: 10px;
@@ -65,44 +64,18 @@
             }
 
             .btn-primary:hover {
-                background: rgba(255, 255, 255, 0.5);
+                background: rgba(0, 123, 255, 0.5); /* Updated to match auth.login */
             }
 
             .card-header,
             .card-body {
-                color: #fff;
-            }
-
-            .circle {
-                position: absolute;
-                top: -5%;
-                left: -5%;
-                width: 600px;
-                aspect-ratio: 1/1;
-                border-radius: 100%;
-                background: rgba(238, 187, 195, 0.63);
-                filter: blur(200px);
-                -webkit-filter: blur(200px);
-            }
-
-            .circle2 {
-                position: absolute;
-                bottom: -5%;
-                right: -5%;
-                width: 600px;
-                aspect-ratio: 1/1;
-                border-radius: 100%;
-                background: rgba(184, 193, 236, 0.63);
-                filter: blur(180px);
-                -webkit-filter: blur(180px);
+                color: #333;
             }
         </style>
 
     </head>
 
     <body>
-        <div class="circle"></div>
-        <div class="circle2"></div>
         <div class="card">
             <div class="card-header text-center">
                 <h2>Register</h2>
