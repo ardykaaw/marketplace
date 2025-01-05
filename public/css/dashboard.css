@@ -4,7 +4,7 @@
     --secondary-hover: #f3d3d8;
     --thirty: #b8c1ec;
     --thirty-hover: #d5daf4;
-    --bg-main: #121629;
+    --bg-main: #e3f2fd; /* Ganti ke biru terang sesuai gambar */
     --card: #fffffe;
 }
 @font-face {
@@ -13,14 +13,12 @@
 }
 @font-face {
     font-family: "Verdana";
-    src: url("/fonts/verdana/verdana.ttf") format('truerype');
+    src: url("/fonts/verdana/verdana.ttf") format('truetype');
 }
 body {
-    background-color: var(--bg-main);
+    background-color: var(--thirty);
     color: #212529;
     margin: 0;
-    /* font-family: Arial, sans-serif; */
-    /* font-family: "Verdana"; */
 }
 .sidebar {
     background-color: var(--primary);
@@ -59,23 +57,22 @@ body {
     margin-bottom: 20px;
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+    transition: transform 0.2s;
 }
 
-/* .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-} */
+.card:hover {
+    transform: scale(1.05);
+}
 
 .card h5 {
-    color: #fff;
+    color: #212529;
     margin: 0;
     padding: 15px;
     font-size: 1.25rem;
 }
 
 .card p {
-    color: #f8f9fa;
+    color: #495057;
     margin: 0;
     padding: 10px;
     font-size: 1rem;
@@ -84,9 +81,9 @@ body {
 .table {
     color: #212529;
     width: 100%;
-    /* border-collapse: collapse; */
     margin-top: 20px;
 }
+
 .table th,
 .table td {
     border-top: 1px solid #dee2e6;
