@@ -17,21 +17,45 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'required|string|max:255',
-            'subject' => 'required|string|max:255'
-        ]);
+        try {
+            $request->validate([
+                'product_id' => 'required|exists:products,id',
+                'rating' => 'required|integer|min:1|max:5',
+                'comment' => 'required|string|max:255',
+                'subject' => 'required|string|max:255'
+            ]);
 
-        Review::create([
-            'user_id' => auth()->id(),
-            'product_id' => $request->product_id,
-            'rating' => $request->rating,
-            'comment' => $request->comment,
-            'subject' => $request->subject
-        ]);
+            Review::create([
+                'user_id' => auth()->id(),
+                'product_id' => $request->product_id,
+                'rating' => $request->rating,
+                'comment' => $request->comment,
+                'subject' => $request->subject
+            ]);
 
-        return redirect()->back()->with('success', 'Ulasan berhasil ditambahkan.');
+            return redirect()->back()->with('success', 'Ulasan berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            \Log::error('Error saving review: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan ulasan.');
+        }
+    }
+
+    public function exportToXml()
+    {
+        $reviews = Review::all();
+        $xml = new \SimpleXMLElement('<reviews/>');
+
+        foreach ($reviews as $review) {
+            $item = $xml->addChild('review');
+            $item->addChild('id', $review->id);
+            $item->addChild('product_id', $review->product_id);
+            $item->addChild('user_id', $review->user_id);
+            $item->addChild('rating', $review->rating);
+            $item->addChild('comment', $review->comment);
+            // Tambahkan field lain sesuai kebutuhan
+        }
+
+        return response($xml->asXML(), 200)
+                  ->header('Content-Type', 'application/xml');
     }
 }

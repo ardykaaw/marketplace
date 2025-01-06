@@ -281,7 +281,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-3">Konfirmasi Pembayaran</button>
+                            <button type="submit" class="btn btn-primary mt-3" id="confirmPaymentButton">Konfirmasi Pembayaran</button>
                         </form>
                     </div>
                 </div>
@@ -355,6 +355,9 @@
                     return;
                 }
 
+                // Show processing animation
+                $('#processingMessage').fadeIn();
+
                 var formData = {
                     product_id: $('input[name="product_id"]').val(),
                     quantity: 1,
@@ -369,7 +372,7 @@
                     success: function(response) {
                         if (response.success) {
                             $('#paymentModal').modal('hide'); // Close the payment modal
-                            $('#processingMessage').fadeIn().delay(3000).fadeOut(); // Show processing animation
+                            $('#processingMessage').delay(3000).fadeOut(); // Hide processing animation after delay
                         } else {
                             alert(response.error);
                         }

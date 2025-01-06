@@ -106,6 +106,7 @@ Route::get('/order/success', [OrderController::class, 'success'])->name('orders.
 // Route untuk membuat dan menyimpan review
 Route::get('/review/create', [ReviewController::class, 'create'])->name('review.create');
 Route::post('/reviews/store', [ReviewController::class, 'store'])->name('review.store');
+Route::post('/review/store', [ReviewController::class, 'store'])->name('review.store');
 
 // Pastikan Anda memiliki route yang sesuai di routes/web.php yang mengarah ke method submitKontak ini:
 // Route::post('/submit-kontak', [KontakController::class, 'submitKontak'])->name('submit.kontak');
@@ -115,3 +116,10 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/kontaks/xml', [KontakController::class, 'exportToXml']);
+Route::post('/kontaks/xml', [KontakController::class, 'importFromXml']);
+
+Route::get('/kontaks', [KontakController::class, 'index'])->name('kontaks.index');
+
+Route::get('/reviews/xml', [ReviewController::class, 'exportToXml']);
